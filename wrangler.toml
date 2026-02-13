@@ -1,0 +1,11 @@
+name = "dictionary"
+main = "dist"
+compatibility_date = "2024-12-01"
+
+[env.production]
+name = "dictionary-production"
+
+[build]
+command = "npm run build"
+cwd = "."
+watch_paths = ["汉语古音手册.html", "汉语古音手册.css", "s2t_map.js", "chunks/**"]

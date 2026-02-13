@@ -1,0 +1,28 @@
+# 依赖和环境
+node_modules/
+.venv/
+*.venv
+env/
+venv/
+
+# 构建输出
+dist/
+build/
+*.pyc
+__pycache__/
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 日志
+*.log
+npm-debug.log*
+
+# OS 相关
+Thumbs.db
+.DS_Store
