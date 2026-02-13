@@ -7,8 +7,8 @@
 	--muted:#6b7280;
 	--glass-shadow: rgba(11,20,45,0.06);
 }
-html,body{height:100%;background:var(--bg);margin:0}
-body{font-family:"Noto Sans CJK SC", 'Microsoft YaHei', system-ui, -apple-system, Roboto, 'Segoe UI', 'PingFang SC';color:#0f172a}
+html{height:100%;background:var(--bg);margin:0}
+body{height:100%;background:var(--bg);margin:0;padding-top:60px;font-family:"Noto Sans CJK SC", 'Microsoft YaHei', system-ui, -apple-system, Roboto, 'Segoe UI', 'PingFang SC';color:#0f172a}
 
 /* Header / search */
 header.topbar{
@@ -20,8 +20,10 @@ header.topbar{
 	align-items:center;
 	gap:12px;
 	flex-wrap:wrap;
-	position:sticky;
+	position:fixed;
 	top:0;
+	left:0;
+	right:0;
 	z-index:999;
 }
 .brand{
