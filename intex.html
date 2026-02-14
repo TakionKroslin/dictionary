@@ -9,71 +9,55 @@
 	<link rel="apple-touch-icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
 	<link rel="stylesheet" type="text/css" href="汉语古音手册.css">
 	<script src="s2t_map.js"></script>
-	<style>
-		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.3);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 72px)}
-		body{margin:0 !important;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height:1.6; color:#222; background:#ecf2f9; padding-top:var(--bar-height); padding-bottom:var(--bottom-safe)}
-			.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.3);backdrop-filter:blur(15px) saturate(130%);padding:var(--bar-pad-y) var(--bar-pad-x);box-shadow:0 2px 12px rgba(11,59,102,0.08);height:var(--bar-height);box-sizing:border-box;border-bottom:1px solid rgba(230,233,239,0.6);display:flex;align-items:center;gap:12px}
+	<style>b
+		:root{--bar-height:64px}
+		body{margin:0;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height:1.6; color:#222; background:#ecf2f9; padding-top:var(--bar-height); padding-bottom:var(--bar-height)}
+			.topbar,.site-footer{position:fixed;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.85);backdrop-filter:blur(15px) saturate(130%);padding:12px 18px;box-shadow:0 2px 12px rgba(11,59,102,0.08);min-height:var(--bar-height);box-sizing:border-box}
+			.topbar{top:0;border-bottom:1px solid rgba(230,233,239,0.6);display:flex;align-items:center;gap:12px}
 		.brand{font-weight:700;font-size:18px;color:#2b6cb0;white-space:nowrap}
 		.search-wrap{flex:1;display:flex;align-items:center;gap:8px}
-		#search-input{flex:1;padding:10px 12px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:16px;transition:border-color 0.2s,box-shadow 0.2s;backdrop-filter:blur(12px) saturate(125%)}
+		#search-input{flex:1;padding:10px 12px;border:1px solid #d0d7e6;border-radius:8px;background:rgba(255,255,255,0.9);font-size:16px;transition:border-color 0.2s,box-shadow 0.2s}
 		#search-input:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
-		#search-mode{padding:10px 10px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;color:#222}
+		#search-mode{padding:10px 10px;border:1px solid #d0d7e6;border-radius:8px;background:rgba(255,255,255,0.9);font-size:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;color:#222}
 		#search-mode:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
-		#search-btn{padding:10px 16px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:8px;cursor:pointer;transition:all 0.2s;font-weight:500;min-width:60px;backdrop-filter:blur(12px) saturate(125%);}
+		#search-btn{padding:10px 16px;background:rgba(43,108,176,0.2);color:#2b6cb0;border:1px solid rgba(208,215,230,0.8);border-radius:8px;cursor:pointer;transition:all 0.2s;font-weight:500;min-width:60px;backdrop-filter:blur(8px) saturate(120%);}
 		#search-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-1px);box-shadow:0 2px 8px rgba(43,108,176,0.15)}
 		#search-btn:active{transform:translateY(0)}
 		#search-input.no-result{animation:shake .28s}
 		@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
 		#entries{max-width:980px;margin:40px auto;margin-left:160px;margin-right:30px;padding:12px}
 		h1{font-size:28px;margin:14px 0 6px;color:#0b3b66}
-		table{border-collapse:collapse;margin:4px 0 10px;background:var(--glass-bg);border:var(--glass-border);width:100%;border-radius:6px;overflow:hidden;backdrop-filter:blur(12px) saturate(125%)}
+		table{border-collapse:collapse;margin:4px 0 10px;background:#fff;border:1px solid #e3e6ee;width:100%;border-radius:6px;overflow:hidden}
 		th,td{padding:8px 10px;border:1px solid #eef2f8;text-align:left;font-size:14px}
 		th{background:rgba(43,108,176,0.05);font-weight:600}
 		caption{font-weight:600;text-align:left;padding:6px 10px}
 		.highlighted{animation:highlight 1.2s ease;box-shadow:0 0 0 4px rgba(43,108,176,0.12)}
 		@keyframes highlight{0%{background:#fff7e6}50%{background:#fffde8}100%{background:transparent}}
-		.entry-card{position:relative;background:var(--glass-bg);border-radius:14px;padding:16px 18px;margin:14px 6px;box-shadow:0 10px 30px rgba(11,20,45,0.06);border:1px solid rgba(255,255,255,0.6);backdrop-filter:blur(10px) saturate(120%);transition:transform .28s ease,box-shadow .28s ease,opacity .36s ease;opacity:0;transform:translateY(12px) scale(.998)}
+		.entry-card{position:relative;background:rgba(255,255,255,0.52);border-radius:14px;padding:16px 18px;margin:14px 6px;box-shadow:0 10px 30px rgba(11,20,45,0.06);border:1px solid rgba(255,255,255,0.6);backdrop-filter:blur(10px) saturate(120%);transition:transform .28s ease,box-shadow .28s ease,opacity .36s ease;opacity:0;transform:translateY(12px) scale(.998)}
 		.entry-card.show{opacity:1;transform:none}
 		.entry-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 26px 54px rgba(11,20,45,0.10)}
-		.copy-btn{position:absolute;bottom:10px;right:10px;padding:6px 10px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:6px;cursor:pointer;font-size:12px;opacity:0;transition:all 0.2s;backdrop-filter:blur(12px) saturate(125%)}
+		.copy-btn{position:absolute;bottom:10px;right:10px;padding:6px 10px;background:rgba(43,108,176,0.2);color:#fff;border:1px solid rgba(208,215,230,0.6);border-radius:6px;cursor:pointer;font-size:12px;opacity:0;transition:all 0.2s;backdrop-filter:blur(8px) saturate(120%);}
 		.entry-card:hover .copy-btn{opacity:1}
-		.copy-btn:hover{background:rgba(255,255,255,0.75);transform:scale(1.05)}
+		.copy-btn:hover{background:rgba(43,108,176,1);transform:scale(1.05)}
 		.copy-btn.copied{background:#4caf50}
-			#btn-prev, #btn-next, #btn-jump{padding:8px 14px;background:var(--glass-bg) !important;color:#2b6cb0 !important;border:var(--glass-border) !important;border-radius:6px;cursor:pointer;transition:all 0.2s ease;font-size:14px;backdrop-filter:blur(12px) saturate(125%)}
+			#btn-prev, #btn-next, #btn-jump{padding:8px 14px;background:rgba(43,108,176,0.15);color:#2b6cb0;border:1px solid rgba(208,215,230,0.8);border-radius:6px;cursor:pointer;transition:all 0.2s ease;font-size:14px;backdrop-filter:blur(8px) saturate(120%);}
 			#btn-prev:hover:not(:disabled), #btn-next:hover:not(:disabled), #btn-jump:hover{background:rgba(43,108,176,0.25);transform:translateY(-2px);box-shadow:0 2px 8px rgba(43,108,176,0.15)}
 			#btn-prev:disabled, #btn-next:disabled, #btn-jump:disabled{opacity:0.4;cursor:not-allowed}
 		#jump-input{padding:8px 10px;border:1px solid #d0d7e6;border-radius:6px;background:#fff;font-size:14px;transition:border-color 0.2s}
 		#jump-input:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
-			.side-fab{position:fixed;right:30px;width:48px;height:48px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1200;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .24s ease,transform .24s ease,background-color .22s ease,box-shadow .22s ease;box-shadow:0 4px 12px rgba(43,108,176,0.2);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);padding:0}
-			.side-fab:hover{background:rgba(43,108,176,0.3);transform:translateY(0);box-shadow:0 6px 16px rgba(43,108,176,0.3)}
-		.side-fab.show{opacity:1;transform:none;pointer-events:auto}
-		.side-fab svg{width:18px;height:18px;fill:none !important;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-		#scroll-to-top{bottom:calc(var(--footer-height) + 78px)}
-		#scroll-to-bottom{bottom:calc(var(--footer-height) + 18px)}
-		#scroll-to-bottom svg{transform:rotate(180deg)}
+			#scroll-to-top{position:fixed;bottom:calc(var(--bar-height) + 22px);right:30px;width:48px;height:48px;background:rgba(43,108,176,0.2);color:#2b6cb0;border:1.5px solid rgba(43,108,176,0.4);border-radius:8px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:999;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(43,108,176,0.2);backdrop-filter:blur(10px) saturate(120%);padding:0;}
+			#scroll-to-top:hover{background:rgba(43,108,176,0.3);transform:translateY(-4px);box-shadow:0 6px 16px rgba(43,108,176,0.3)}
+		#scroll-to-top.show{display:flex}
 		#share-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(43,108,176,0.2)}
 		#share-btn.copied{background:rgba(76,175,80,0.2);color:#4caf50;border-color:rgba(76,175,80,0.4)}
 		#sidebar{position:fixed;left:30px;top:80px;width:130px;z-index:500;transition:all 0.3s ease}
 		#sidebar img{transition:all 0.3s ease;cursor:pointer}
 		#sidebar img:hover{transform:scale(1.04) rotate(-1deg);box-shadow:0 8px 16px rgba(43,108,176,0.2)}
-			footer.site-footer{position:fixed !important;inset:auto 0 0 0 !important;width:100vw !important;max-width:100vw !important;z-index:1000 !important;margin:0 !important;border-radius:0 !important;background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(18px) saturate(145%) !important;backdrop-filter:blur(18px) saturate(145%) !important;padding:8px var(--bar-pad-x) !important;height:var(--footer-height) !important;box-sizing:border-box !important;border-top:1px solid rgba(230,233,239,0.6) !important;box-shadow:0 -2px 12px rgba(11,59,102,0.08) !important;display:flex;align-items:center;justify-content:center;text-align:center;color:#666;font-size:13px}
-		footer.site-footer .footer-content{width:100%;height:100%;max-width:none;margin:0;display:flex;align-items:center;justify-content:center;gap:12px}
-		#pagination-bar{margin-bottom:32px !important;background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
-		#diagnostics-footer{margin-bottom:calc(var(--footer-height) + 56px) !important;background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
-		#diagnostics-footer details{background:var(--glass-bg) !important;border:var(--glass-border);backdrop-filter:blur(10px) saturate(125%)}
-		footer{background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
-		#share-btn,#jump-input{background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
+			.site-footer{bottom:0;width:100%;margin:0;border-radius:0;border-top:1px solid rgba(230,233,239,0.6);box-shadow:0 -2px 12px rgba(11,59,102,0.08);display:flex;align-items:center;justify-content:center;text-align:center;color:#666;font-size:13px}
+		.site-footer .footer-content{width:100%;max-width:none;margin:0;display:flex;align-items:center;justify-content:center;gap:12px}
 		.footer-text{display:flex;align-items:center;gap:6px}
-			.footer-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:#2b6cb0;cursor:pointer;transition:opacity .2s,transform .2s,background-color .2s,color .2s;text-decoration:none;opacity:.78;border-radius:6px}
-			.footer-btn:hover{opacity:1;transform:translateY(-1px);background:rgba(43,108,176,0.25);color:#2b6cb0}
-		@media (max-width:768px){
-			body{padding-bottom:calc(var(--footer-height) + 92px)}
-			#pagination-bar{margin-bottom:24px !important}
-			#diagnostics-footer{margin-bottom:calc(var(--footer-height) + 76px) !important}
-			.side-fab{right:14px;width:44px;height:44px}
-			#scroll-to-top{bottom:calc(var(--footer-height) + 92px)}
-			#scroll-to-bottom{bottom:calc(var(--footer-height) + 34px)}
-		}
+			.footer-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:#2b6cb0;cursor:pointer;transition:opacity 0.2s,transform 0.2s;text-decoration:none;opacity:0.78}
+			.footer-btn:hover{opacity:1;transform:translateY(-1px)}
 	</style>
 		<script>
 	(function(){
@@ -122,38 +106,6 @@
 		}
 
 		async function fetchJSON(url){ try{ const r=await fetch(url); if(!r.ok) throw 0; return await r.json(); }catch(e){ console.error('加载失败: '+url, e); return null } }
-
-		function formatCardForCopy(card){
-			const lines = [];
-			const title = card.querySelector('h1')?.textContent?.trim();
-			if(title) lines.push(`【${title}】`);
-
-			const plainBlocks = Array.from(card.children).filter((el)=>{
-				if(!el || !el.tagName) return false;
-				const tag = el.tagName.toLowerCase();
-				return tag === 'p' || tag === 'div';
-			});
-			for(const block of plainBlocks){
-				const t = block.textContent?.replace(/\s+/g, ' ').trim();
-				if(t) lines.push(t);
-			}
-
-			const tables = card.querySelectorAll('table');
-			for(const table of tables){
-				const caption = table.querySelector('caption')?.textContent?.trim();
-				if(caption) lines.push(`\n${caption}`);
-
-				const rows = table.querySelectorAll('tr');
-				for(const row of rows){
-					const cells = row.querySelectorAll('th,td');
-					const rowText = Array.from(cells).map((cell)=>cell.textContent?.replace(/\s+/g, ' ').trim() || '').filter(Boolean).join(' | ');
-					if(rowText) lines.push(rowText);
-				}
-			}
-
-			const cleaned = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-			return `${cleaned}\n\n—— 汉语古音手册\n${location.href}`;
-		}
 
 		function updateButtons(){
 			const btnPrev = document.getElementById('btn-prev');
@@ -212,7 +164,8 @@
 						copyBtn.textContent = '复制';
 						copyBtn.addEventListener('click', (e) => {
 							e.stopPropagation();
-							const cardText = formatCardForCopy(card);
+							// 复制整个卡片的内容（不包含复制按钮本身）
+							const cardText = card.textContent.replace('复制', '').replace('已复制', '').trim();
 							navigator.clipboard.writeText(cardText).then(() => {
 								copyBtn.classList.add('copied');
 								copyBtn.textContent = '已复制';
@@ -268,7 +221,7 @@
 			
 			// 获取所有繁体字集合（用于快速查找）
 			const tradCharSet = new Set();
-			const charToHeading = new Map(); // 字 -> 标题对象
+			const charToHeading = new Map(); // 字->标题对象
 			for(const h of indexData.headings){
 				const title = h.title;
 				if(title.length === 1) {
@@ -401,7 +354,7 @@
 	<div id="entries"></div>
 </div>
 
-<div id="pagination-bar" style="max-width:980px;margin:20px auto 32px auto;padding:12px;background:#fff;border:1px solid #e3e6ee;border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+<div id="pagination-bar" style="max-width:980px;margin:20px auto;padding:12px;background:#fff;border:1px solid #e3e6ee;border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
 	<div style="display:flex;gap:8px;align-items:center;">
 		<button id="btn-prev" style="padding:8px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">上一页</button>
 		<button id="btn-next" style="padding:8px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">下一页</button>
@@ -413,17 +366,12 @@
 	</div>
 </div>
 
-<footer id="diagnostics-footer" style="max-width:980px;margin:20px auto calc(var(--bar-height) + 20px) auto;padding:14px;color:#556;font-size:13px;text-align:center;border-radius:6px;background:#fff;border:1px solid #e3e6ee;">
-	<details style="text-align:left;padding:12px;background:#f5f5f5;border-radius:4px;">
-		<summary style="cursor:pointer;font-weight:600;color:#2b6cb0;">🔧 诊断信息 (点击展开)</summary>
-		<div id="diagnostics" style="margin-top:10px;font-family:monospace;font-size:12px;white-space:pre-wrap;color:#333;max-height:300px;overflow-y:auto;">加载中...</div>
-	</details>
-</footer>
+
 
 <footer class="site-footer">
 	<div class="footer-content">
 		<div class="footer-text">© 2026 Takion Kroslin</div>
-		<a href="https://github.com/TakionKroslin/dictionary" target="_blank" class="footer-btn" title="GitHub" aria-label="GitHub">
+		<a href="https://github.com/Takion-Kroslin/dictionary" target="_blank" class="footer-btn" title="GitHub" aria-label="GitHub">
 			<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 				<path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.09 3.3 9.41 7.88 10.94.58.1.79-.25.79-.56v-2.02c-3.2.69-3.88-1.55-3.88-1.55-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.09 1.75 1.18 1.75 1.18 1.01 1.75 2.67 1.24 3.33.95.1-.73.4-1.24.72-1.52-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.19a10.8 10.8 0 0 1 5.74 0c2.18-1.5 3.14-1.19 3.14-1.19.62 1.58.23 2.75.11 3.04.73.81 1.18 1.85 1.18 3.11 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.07.78 2.15v3.19c0 .31.21.67.8.56a11.54 11.54 0 0 0 7.87-10.94C23.5 5.66 18.35.5 12 .5z"/>
 			</svg>
@@ -431,14 +379,10 @@
 	</div>
 </footer>
 
-<button id="scroll-to-top" class="side-fab" title="回到顶部">
+<button id="scroll-to-top" title="回到顶部">
 	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-		<polyline points="6 14 12 8 18 14"></polyline>
-	</svg>
-</button>
-<button id="scroll-to-bottom" class="side-fab" title="到底部">
-	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-		<polyline points="6 14 12 8 18 14"></polyline>
+		<polyline points="18 15 12 9 6 15"></polyline>
+		<line x1="12" y1="21" x2="12" y2="9"></line>
 	</svg>
 </button>
 
@@ -447,82 +391,32 @@
 const shareBtn = document.getElementById('share-btn');
 if(shareBtn) {
 	shareBtn.addEventListener('click', () => {
-		const shareUrl = ""; // 预先留空，后面修改
+		const shareUrl = ''; // 釄先留空，后面修改
 		navigator.clipboard.writeText(shareUrl).then(() => {
 			shareBtn.classList.add('copied');
 			shareBtn.textContent = '🔗 链接已复制';
 			setTimeout(() => {
 				shareBtn.classList.remove('copied');
-				shareBtn.textContent = '👋 分享给好友';
+				shareBtn.textContent = '\ud83d\udc4b 分享给好友';
 			}, 3000);
 		}).catch(err => console.error('复制失败:', err));
 	});
 }
 
-// 回到顶部/底部按钮功能
+// 回到顶部按钮功能
 const scrollBtn = document.getElementById('scroll-to-top');
-const scrollBottomBtn = document.getElementById('scroll-to-bottom');
 window.addEventListener('scroll', () => {
-	const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 	if(window.scrollY > 300) {
 		scrollBtn.classList.add('show');
 	} else {
 		scrollBtn.classList.remove('show');
 	}
-	if(window.scrollY < maxScroll - 300) {
-		scrollBottomBtn.classList.add('show');
-	} else {
-		scrollBottomBtn.classList.remove('show');
-	}
 });
 scrollBtn.addEventListener('click', () => {
 	window.scrollTo({top: 0, behavior: 'smooth'});
 });
-scrollBottomBtn.addEventListener('click', () => {
-	window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'smooth'});
-});
 </script>
 
-<script>
-// 诊断脚本
-(async function() {
-	const diag = document.getElementById('diagnostics');
-	let msg = '';
-	
-	msg += '浏览器: ' + navigator.userAgent + '\n\n';
-	msg += '当前 URL: ' + location.href + '\n\n';
-	
-	try {
-		msg += '试验 fetch 支持:\n';
-		const testUrl = 'chunks/index.json';
-		const response = await fetch(testUrl);
-		msg += `✓ fetch 响应: ${response.status} ${response.statusText}\n`;
-		msg += `✓ Content-Type: ${response.headers.get('content-type')}\n`;
-		if (response.ok) {
-			const json = await response.json();
-			msg += `✓ JSON 解析成功: ${json.chunks} 块\n`;
-		}
-	} catch(e) {
-		msg += `✗ Fetch 失败: ${e.message}\n`;
-		msg += `  这可能是因为 file:// 协议的限制。\n`;
-		msg += `  解决方案: 使用 HTTP 服务器\n`;
-		msg += `  Python 3: python -m http.server 8000\n`;
-		msg += `  然后访问: http://localhost:8000/汉语古音手册.html\n`;
-	}
-	
-	msg += '\n检查文件:\n';
-	const files = ['chunks/index.json', 'chunks/part-0.html', 'index.json'];
-	for (const file of files) {
-		try {
-			const r = await fetch(file, {method: 'HEAD'});
-			msg += `${r.ok ? '✓' : '✗'} ${file} (${r.status})\n`;
-		} catch(e) {
-			msg += `✗ ${file} (${e.message})\n`;
-		}
-	}
-	
-	diag.textContent = msg;
-})();
-</script>
+
 </body>
 </html>
