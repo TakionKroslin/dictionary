@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>汉语古音手册 �?词典</title>
+	<title>汉语古音手册 — 词典</title>
 	<link rel="icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" type="image/png">
 	<link rel="shortcut icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
 	<link rel="apple-touch-icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
@@ -83,10 +83,10 @@
 		}
 
 		async function ensureConverter(){
-			console.log('�?使用本地简繁映射表 (s2t_map.js)');
-			// 使用全局�?s2tMap（从 s2t_map.js 加载�?
+			console.log('✓ 使用本地简繁映射表 (s2t_map.js)');
+			// 使用全局的 s2tMap（从 s2t_map.js 加载）
 			if(typeof s2tMap === 'undefined') {
-				console.warn('�?s2tMap 未定义，等待加载...');
+				console.warn('⚠ s2tMap 未定义，等待加载...');
 				// 等待 s2t_map.js 加载
 				let retry = 0;
 				while(typeof s2tMap === 'undefined' && retry < 50) {
@@ -100,7 +100,7 @@
 				toT: (t)=>{
 					// 简转繁（使用全局映射表）
 					if(typeof s2tMap === 'undefined') {
-						console.warn('�?s2tMap 仍未定义');
+						console.warn('⚠ s2tMap 仍未定义');
 						return t;
 					}
 					let result = '';
@@ -118,7 +118,7 @@
 		function formatCardForCopy(card){
 			const lines = [];
 			const title = card.querySelector('h1')?.textContent?.trim();
-			if(title) lines.push(`�?{title}】`);
+			if(title) lines.push(`【${title}】`);
 
 			const plainBlocks = Array.from(card.children).filter((el)=>{
 				if(!el || !el.tagName) return false;
@@ -144,7 +144,7 @@
 			}
 
 			const cleaned = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-			return `${cleaned}\n\n—�?汉语古音手册\n${location.href}`;
+			return `${cleaned}\n\n—— 汉语古音手册\n${location.href}`;
 		}
 
 		function updateButtons(){
@@ -161,7 +161,7 @@
 			currentChunk = n;
 			updateButtons();
 			const entries = document.getElementById('entries');
-			entries.innerHTML = '<div style="padding:20px;text-align:center;color:#999;">加载�?..</div>';
+			entries.innerHTML = '<div style="padding:20px;text-align:center;color:#999;">加载中...</div>';
 			loaded.delete(n);
 			await loadChunk(n);
 			window.scrollTo({top: 0, behavior: 'smooth'});
@@ -170,13 +170,13 @@
 		async function loadChunk(n){ 
 			if(loaded.has(n)) return; 
 			const url = CHUNK_URL(n);
-			console.log('开始加�?, url);
+			console.log('开始加载', url);
 			try{ 
 				const r=await fetch(url); 
 				console.log('fetch 响应:', r.status, r.ok);
 				if(!r.ok) throw new Error('HTTP ' + r.status); 
 				const html = await r.text(); 
-				console.log('获取�?HTML，长�?', html.length);
+				console.log('获取到 HTML，长度:', html.length);
 				const entries = document.getElementById('entries');
 				entries.innerHTML = '';
 				const wrapper = document.createElement('div'); 
@@ -185,14 +185,14 @@
 				
 				const headingsForChunk = indexData.headings.filter(h=>h.chunk===n).sort((a,b)=>a.index-b.index);
 				const h1s = wrapper.querySelectorAll('h1');
-				console.log('找到', h1s.length, '�?h1 标签，期�?, headingsForChunk.length, '�?);
+				console.log('找到', h1s.length, '个 h1 标签，期望', headingsForChunk.length, '个');
 				for(let i=0;i<h1s.length && i<headingsForChunk.length;i++){ 
 					try{ h1s[i].id = headingsForChunk[i].id; }catch(e){} 
 				}
 				
 				// 添加 show 类以使卡片可见，并为每个卡片添加复制按钮
 				const cards = wrapper.querySelectorAll('.entry-card');
-				console.log('�?, cards.length, '个卡片添�?show 类和复制按钮');
+				console.log('为', cards.length, '个卡片添加 show 类和复制按钮');
 				for(let card of cards) {
 					card.classList.add('show');
 					
@@ -207,7 +207,7 @@
 							const cardText = formatCardForCopy(card);
 							navigator.clipboard.writeText(cardText).then(() => {
 								copyBtn.classList.add('copied');
-								copyBtn.textContent = '已复�?;
+								copyBtn.textContent = '已复制';
 								setTimeout(() => {
 									copyBtn.classList.remove('copied');
 									copyBtn.textContent = '复制';
@@ -220,7 +220,7 @@
 				
 				entries.appendChild(wrapper);
 				loaded.set(n, html);
-				console.log('�?, n, '加载完成');
+				console.log('块', n, '加载完成');
 			}catch(e){ 
 				console.error('加载失败 chunk '+n, e);
 				const entries = document.getElementById('entries');
@@ -231,20 +231,20 @@
 		document.addEventListener('DOMContentLoaded', async ()=>{
 			const entries = document.getElementById('entries');
 			if(!entries) {
-				console.error('未找�?#entries div');
+				console.error('未找到 #entries div');
 				return;
 			}
 			
-			console.log('开始加�?INDEX_PATH:', INDEX_PATH);
+			console.log('开始加载 INDEX_PATH:', INDEX_PATH);
 			indexData = await fetchJSON(INDEX_PATH);
 			
 			if(!indexData){ 
 				console.error('索引文件加载失败');
-				entries.innerHTML = '�?无法加载索引文件'; 
+				entries.innerHTML = '❌ 无法加载索引文件'; 
 				return; 
 			}
 			
-			console.log('索引加载成功，总块�?', indexData.chunks);
+			console.log('索引加载成功，总块数:', indexData.chunks);
 			
 			console.log('开始加载第一个块');
 			await goToChunk(0);
@@ -260,7 +260,7 @@
 			
 			// 获取所有繁体字集合（用于快速查找）
 			const tradCharSet = new Set();
-			const charToHeading = new Map(); // �?>标题对象
+			const charToHeading = new Map(); // 字 -> 标题对象
 			for(const h of indexData.headings){
 				const title = h.title;
 				if(title.length === 1) {
@@ -295,20 +295,20 @@
 				let q = (input.value||'').trim(); 
 				if(!q) return;
 				
-				console.log('=== 搜索开�?===');
+				console.log('=== 搜索开始 ===');
 				console.log('输入:', q);
 				
-				// 用户应该在左边面板转换后，在右边面板直接输入繁体�?
+				// 用户应该在左边面板转换后，在右边面板直接输入繁体字
 				const h = findHeading(q);
 				
 				if(!h){ 
-					console.log('�?未找到匹配项');
+					console.log('✗ 未找到匹配项');
 					input.classList.add('no-result'); 
 					setTimeout(()=>input.classList.remove('no-result'),600); 
 					return; 
 				}
 				
-				console.log('�?找到:', h.title);
+				console.log('✓ 找到:', h.title);
 				console.log('=== 搜索成功 ===');
 				await goToChunk(h.chunk);
 				setTimeout(() => {
@@ -357,7 +357,7 @@
 </head>
 <body>
 <script>
-// �?DOM 加载前检测设备类�?
+// 在 DOM 加载前检测设备类型
 (function() {
 	const isMobile = () => window.innerWidth <= 768;
 	const updateDeviceClass = () => {
@@ -371,15 +371,15 @@
 	};
 	updateDeviceClass();
 	window.addEventListener('resize', updateDeviceClass);
-	// 保存�?window 供其他脚本使�?
+	// 保存到 window 供其他脚本使用
 	window.__isMobile = isMobile;
 })();
 </script>
 <header class="topbar">
 	<div class="brand">汉语古音手册</div>
-	<div style="color:#e74c3c;font-size:12px;font-weight:500;margin-right:auto;" class="topbar-warning">�?仅支持繁体字</div>
+	<div style="color:#e74c3c;font-size:12px;font-weight:500;margin-right:auto;" class="topbar-warning">※ 仅支持繁体字</div>
 	<div class="search-wrap">
-<input id="search-input" placeholder="���뷱��������" aria-label="������">
+		<input id="search-input" placeholder="输入繁体字搜索" aria-label="搜索字">
 		<button id="search-btn">查找</button>
 	</div>
 </header>
@@ -395,8 +395,8 @@
 
 <div id="pagination-bar" style="max-width:980px;margin:20px auto 32px auto;padding:12px;background:#fff;border:1px solid #e3e6ee;border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
 	<div style="display:flex;gap:8px;align-items:center;">
-<button id="btn-prev" style="padding:8px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">��һҳ</button>
-<button id="btn-next" style="padding:8px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">��һҳ</button>
+		<button id="btn-prev" style="padding:8px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">上一页</button>
+		<button id="btn-next" style="padding:8px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">下一页</button>
 	</div>
 	<div id="chunk-info" style="font-weight:600;color:#2b6cb0;font-size:14px;">分片 1 / 236</div>
 	<div style="display:flex;gap:8px;align-items:center;">
@@ -408,7 +408,7 @@
 <footer id="diagnostics-footer" style="max-width:980px;margin:20px auto calc(var(--bar-height) + 20px) auto;padding:14px;color:#556;font-size:13px;text-align:center;border-radius:6px;background:#fff;border:1px solid #e3e6ee;">
 	<details style="text-align:left;padding:12px;background:#f5f5f5;border-radius:4px;">
 		<summary style="cursor:pointer;font-weight:600;color:#2b6cb0;">🔧 诊断信息 (点击展开)</summary>
-		<div id="diagnostics" style="margin-top:10px;font-family:monospace;font-size:12px;white-space:pre-wrap;color:#333;max-height:300px;overflow-y:auto;">加载�?..</div>
+		<div id="diagnostics" style="margin-top:10px;font-family:monospace;font-size:12px;white-space:pre-wrap;color:#333;max-height:300px;overflow-y:auto;">加载中...</div>
 	</details>
 </footer>
 
@@ -428,7 +428,7 @@
 		<polyline points="6 14 12 8 18 14"></polyline>
 	</svg>
 </button>
-<button id="scroll-to-bottom" class="side-fab" title="���ײ�">
+<button id="scroll-to-bottom" class="side-fab" title="到底部">
 	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 		<polyline points="6 14 12 8 18 14"></polyline>
 	</svg>
@@ -439,13 +439,13 @@
 const shareBtn = document.getElementById('share-btn');
 if(shareBtn) {
 	shareBtn.addEventListener('click', () => {
-		const shareUrl = ''; // 釄先留空，后面修�?
+		const shareUrl = ""; // 预先留空，后面修改
 		navigator.clipboard.writeText(shareUrl).then(() => {
 			shareBtn.classList.add('copied');
-			shareBtn.textContent = '🔗 链接已复�?;
+			shareBtn.textContent = '🔗 链接已复制';
 			setTimeout(() => {
 				shareBtn.classList.remove('copied');
-				shareBtn.textContent = '\ud83d\udc4b 分享给好�?;
+				shareBtn.textContent = '👋 分享给好友';
 			}, 3000);
 		}).catch(err => console.error('复制失败:', err));
 	});
@@ -481,35 +481,35 @@ scrollBottomBtn.addEventListener('click', () => {
 	const diag = document.getElementById('diagnostics');
 	let msg = '';
 	
-	msg += '浏览�? ' + navigator.userAgent + '\n\n';
+	msg += '浏览器: ' + navigator.userAgent + '\n\n';
 	msg += '当前 URL: ' + location.href + '\n\n';
 	
 	try {
 		msg += '试验 fetch 支持:\n';
 		const testUrl = 'chunks/index.json';
 		const response = await fetch(testUrl);
-		msg += `�?fetch 响应: ${response.status} ${response.statusText}\n`;
-		msg += `�?Content-Type: ${response.headers.get('content-type')}\n`;
+		msg += `✓ fetch 响应: ${response.status} ${response.statusText}\n`;
+		msg += `✓ Content-Type: ${response.headers.get('content-type')}\n`;
 		if (response.ok) {
 			const json = await response.json();
-			msg += `�?JSON 解析成功: ${json.chunks} 块\n`;
+			msg += `✓ JSON 解析成功: ${json.chunks} 块\n`;
 		}
 	} catch(e) {
-		msg += `�?Fetch 失败: ${e.message}\n`;
+		msg += `✗ Fetch 失败: ${e.message}\n`;
 		msg += `  这可能是因为 file:// 协议的限制。\n`;
 		msg += `  解决方案: 使用 HTTP 服务器\n`;
 		msg += `  Python 3: python -m http.server 8000\n`;
 		msg += `  然后访问: http://localhost:8000/汉语古音手册.html\n`;
 	}
 	
-	msg += '\n检查文�?\n';
+	msg += '\n检查文件:\n';
 	const files = ['chunks/index.json', 'chunks/part-0.html', 'index.json'];
 	for (const file of files) {
 		try {
 			const r = await fetch(file, {method: 'HEAD'});
-			msg += `${r.ok ? '�? : '�?} ${file} (${r.status})\n`;
+			msg += `${r.ok ? '✓' : '✗'} ${file} (${r.status})\n`;
 		} catch(e) {
-			msg += `�?${file} (${e.message})\n`;
+			msg += `✗ ${file} (${e.message})\n`;
 		}
 	}
 	

@@ -292,7 +292,7 @@ body.mobile .topbar-warning {
 /* small helpers */
 .muted{color:var(--muted)}
 
-/* 侧边栏样�?*/
+/* 侧边栏样式*/
 #sidebar img{
 	transition:all 0.3s ease;
 	cursor:pointer;
