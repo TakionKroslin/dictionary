@@ -341,19 +341,19 @@ footer{
 	--footer-height:50px;
 	--glass-bg:rgba(255,255,255,0.3);
 	--glass-border:1px solid rgba(208,215,230,0.72);
-	--bottom-safe:calc(var(--footer-height) + 24px);
+	--bottom-safe:calc(var(--footer-height) + 72px);
 }
 #pagination-bar{
 	background:var(--glass-bg) !important;
 	border:var(--glass-border) !important;
 	backdrop-filter:blur(12px) saturate(125%) !important;
-	margin-bottom:20px !important;
+	margin-bottom:32px !important;
 }
 #diagnostics-footer{
 	background:var(--glass-bg) !important;
 	border:var(--glass-border) !important;
 	backdrop-filter:blur(12px) saturate(125%) !important;
-	margin-bottom:calc(var(--footer-height) + 24px) !important;
+	margin-bottom:calc(var(--footer-height) + 56px) !important;
 }
 #diagnostics-footer details{
 	background:var(--glass-bg) !important;
@@ -431,5 +431,14 @@ footer{
 #scroll-to-top svg,
 #scroll-to-bottom svg,
 .side-fab svg{fill:none !important;stroke:currentColor !important;stroke-width:2.5 !important;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:768px){
+	body{padding-bottom:calc(var(--footer-height) + 92px)}
+	#pagination-bar{margin-bottom:24px !important}
+	#diagnostics-footer{margin-bottom:calc(var(--footer-height) + 76px) !important}
+	.side-fab{right:14px !important;width:44px !important;height:44px !important}
+	#scroll-to-top{bottom:calc(var(--footer-height) + 92px) !important}
+	#scroll-to-bottom{bottom:calc(var(--footer-height) + 34px) !important}
+}
 
 

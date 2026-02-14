@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="汉语古音手册.css">
 	<script src="s2t_map.js"></script>
 	<style>
-		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.3);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 24px)}
+		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.3);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 72px)}
 		body{margin:0 !important;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height:1.6; color:#222; background:#ecf2f9; padding-top:var(--bar-height); padding-bottom:var(--bottom-safe)}
 			.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.3);backdrop-filter:blur(15px) saturate(130%);padding:var(--bar-pad-y) var(--bar-pad-x);box-shadow:0 2px 12px rgba(11,59,102,0.08);height:var(--bar-height);box-sizing:border-box;border-bottom:1px solid rgba(230,233,239,0.6);display:flex;align-items:center;gap:12px}
 		.brand{font-weight:700;font-size:18px;color:#2b6cb0;white-space:nowrap}
@@ -58,14 +58,22 @@
 		#sidebar img:hover{transform:scale(1.04) rotate(-1deg);box-shadow:0 8px 16px rgba(43,108,176,0.2)}
 			footer.site-footer{position:fixed !important;inset:auto 0 0 0 !important;width:100vw !important;max-width:100vw !important;z-index:1000 !important;margin:0 !important;border-radius:0 !important;background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(18px) saturate(145%) !important;backdrop-filter:blur(18px) saturate(145%) !important;padding:8px var(--bar-pad-x) !important;height:var(--footer-height) !important;box-sizing:border-box !important;border-top:1px solid rgba(230,233,239,0.6) !important;box-shadow:0 -2px 12px rgba(11,59,102,0.08) !important;display:flex;align-items:center;justify-content:center;text-align:center;color:#666;font-size:13px}
 		footer.site-footer .footer-content{width:100%;height:100%;max-width:none;margin:0;display:flex;align-items:center;justify-content:center;gap:12px}
-		#pagination-bar{margin-bottom:20px !important;background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
-		#diagnostics-footer{margin-bottom:calc(var(--footer-height) + 24px) !important;background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
+		#pagination-bar{margin-bottom:32px !important;background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
+		#diagnostics-footer{margin-bottom:calc(var(--footer-height) + 56px) !important;background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
 		#diagnostics-footer details{background:var(--glass-bg) !important;border:var(--glass-border);backdrop-filter:blur(10px) saturate(125%)}
 		footer{background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
 		#share-btn,#jump-input{background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
 		.footer-text{display:flex;align-items:center;gap:6px}
 			.footer-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:#2b6cb0;cursor:pointer;transition:opacity .2s,transform .2s,background-color .2s,color .2s;text-decoration:none;opacity:.78;border-radius:6px}
 			.footer-btn:hover{opacity:1;transform:translateY(-1px);background:rgba(43,108,176,0.25);color:#2b6cb0}
+		@media (max-width:768px){
+			body{padding-bottom:calc(var(--footer-height) + 92px)}
+			#pagination-bar{margin-bottom:24px !important}
+			#diagnostics-footer{margin-bottom:calc(var(--footer-height) + 76px) !important}
+			.side-fab{right:14px;width:44px;height:44px}
+			#scroll-to-top{bottom:calc(var(--footer-height) + 92px)}
+			#scroll-to-bottom{bottom:calc(var(--footer-height) + 34px)}
+		}
 	</style>
 		<script>
 	(function(){
