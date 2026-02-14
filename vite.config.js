@@ -7,7 +7,7 @@ export default defineConfig({
     target: "esnext",
     minify: false,
     rollupOptions: {
-      input: path.resolve(__dirname, "汉语古音手册.html"),
+      input: path.resolve(__dirname, "intex.html"),
       output: {
         dir: path.resolve(__dirname, "dist")
       }
@@ -28,7 +28,7 @@ export default defineConfig({
       generateBundle(options, bundle) {
         // 找到生成的 HTML 文件并将其重命名为 index.html
         for (const [filename, asset] of Object.entries(bundle)) {
-          if (filename.includes("汉语古音手册") && filename.endsWith(".html")) {
+          if (filename.includes("intex") && filename.endsWith(".html")) {
             // 创建 index.html 的引用
             const content = asset.source
             bundle["index.html"] = {
@@ -43,7 +43,7 @@ export default defineConfig({
       writeBundle() {
         // 确保 index.html 作为入口点存在
         const distPath = path.resolve(__dirname, "dist")
-        const htmlFile = path.join(distPath, "汉语古音手册.html")
+        const htmlFile = path.join(distPath, "intex.html")
         const indexFile = path.join(distPath, "index.html")
         
         if (fs.existsSync(htmlFile)) {
