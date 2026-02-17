@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>汉语古音手册 — 词典</title>
+	<link rel="icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" type="image/png">
+	<link rel="shortcut icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
+	<link rel="apple-touch-icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
+	<link rel="stylesheet" type="text/css" href="汉语古音手册.css">
+	<script src="s2t_map.js"></script>
+	<style>
+		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.3);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 72px)}
+		body{margin:0 !important;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height:1.6; color:#222; background:#ecf2f9; padding-top:var(--bar-height); padding-bottom:var(--bottom-safe)}
+			.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.3);backdrop-filter:blur(15px) saturate(130%);padding:var(--bar-pad-y) var(--bar-pad-x);box-shadow:0 2px 12px rgba(11,59,102,0.08);height:var(--bar-height);box-sizing:border-box;border-bottom:1px solid rgba(230,233,239,0.6);display:flex;align-items:center;gap:12px}
+		.brand{font-weight:700;font-size:18px;color:#2b6cb0;white-space:nowrap}
+		.search-wrap{flex:1;display:flex;align-items:center;gap:8px}
+		#search-input{flex:1;padding:10px 12px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:16px;transition:border-color 0.2s,box-shadow 0.2s;backdrop-filter:blur(12px) saturate(125%)}
+		#search-input:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
+		#search-mode{padding:10px 10px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;color:#222}
+		#search-mode:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
+		#search-btn{padding:10px 16px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:8px;cursor:pointer;transition:all 0.2s;font-weight:500;min-width:60px;backdrop-filter:blur(12px) saturate(125%);}
+		#search-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-1px);box-shadow:0 2px 8px rgba(43,108,176,0.15)}
+		#search-btn:active{transform:translateY(0)}
+		#search-input.no-result{animation:shake .28s}
+		@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+		#entries{max-width:980px;margin:40px auto;margin-left:160px;margin-right:30px;padding:12px}
+		.main-container{max-width:980px;margin:40px auto;padding:0 20px}
+		h1{font-size:28px;margin:14px 0 6px;color:#0b3b66}
+		table{border-collapse:collapse;margin:4px 0 10px;background:var(--glass-bg);border:var(--glass-border);width:100%;border-radius:6px;overflow:hidden;backdrop-filter:blur(12px) saturate(125%)}
+		th,td{padding:8px 10px;border:1px solid #eef2f8;text-align:left;font-size:14px}
+		th{background:rgba(43,108,176,0.05);font-weight:600}
+		caption{font-weight:600;text-align:left;padding:6px 10px}
+		.highlighted{animation:highlight 1.2s ease;box-shadow:0 0 0 4px rgba(43,108,176,0.12)}
+		@keyframes highlight{0%{background:#fff7e6}50%{background:#fffde8}100%{background:transparent}}
+		.entry-card{position:relative;background:var(--glass-bg);border-radius:14px;padding:16px 18px;margin:14px 6px;box-shadow:0 10px 30px rgba(11,20,45,0.06);border:1px solid rgba(255,255,255,0.6);backdrop-filter:blur(10px) saturate(120%);transition:transform .28s ease,box-shadow .28s ease,opacity .36s ease;opacity:0;transform:translateY(12px) scale(.998);overflow:hidden}
+		.entry-card.show{opacity:1;transform:none}
+		.entry-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 26px 54px rgba(11,20,45,0.10)}
+		.copy-btn{position:absolute;bottom:10px;right:10px;padding:6px 10px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:6px;cursor:pointer;font-size:12px;opacity:0;transition:all 0.2s;backdrop-filter:blur(12px) saturate(125%)}
+		.entry-card:hover .copy-btn{opacity:1}
+		.copy-btn:hover{background:rgba(255,255,255,0.75);transform:scale(1.05)}
+		.copy-btn.copied{background:#4caf50}
+		#jump-input{padding:8px 10px;border:1px solid #d0d7e6;border-radius:6px;background:#fff;font-size:14px;transition:border-color 0.2s}
+		#jump-input:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
+			.side-fab{position:fixed;right:30px;width:48px;height:48px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1200;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .24s ease,transform .24s ease,background-color .22s ease,box-shadow .22s ease;box-shadow:0 4px 12px rgba(43,108,176,0.2);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);padding:0}
+			.side-fab:hover{background:rgba(43,108,176,0.3);transform:translateY(0);box-shadow:0 6px 16px rgba(43,108,176,0.3)}
+		.side-fab.show{opacity:1;transform:none;pointer-events:auto}
+		.page-btn{opacity:1 !important;transform:none !important;pointer-events:auto !important}
+		.side-fab svg{width:18px;height:18px;fill:none !important;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+		#scroll-to-top{bottom:calc(var(--footer-height) + 90px)}
+		#scroll-to-bottom{bottom:calc(var(--footer-height) + 30px)}
+		#scroll-to-bottom svg{transform:rotate(180deg)}
+		#page-prev{bottom:calc(var(--footer-height) + 150px)}
+		#page-next{bottom:calc(var(--footer-height) + 210px)}
+		.page-btn{right:20px}
+		#share-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(43,108,176,0.2)}
+		#share-btn.copied{background:rgba(76,175,80,0.2);color:#4caf50;border-color:rgba(76,175,80,0.4)}
+		#sidebar{position:fixed;left:30px;top:80px;width:130px;z-index:500;transition:all 0.3s ease}
+		#sidebar img{width:100%;height:130px;border-radius:8px;box-shadow:0 2px 8px rgba(43,108,176,0.12);object-fit:cover;transition:all 0.3s ease;cursor:pointer;display:block}
+		#sidebar img:hover{transform:scale(1.04) rotate(-1deg);box-shadow:0 8px 16px rgba(43,108,176,0.2)}
+		#sidebar #share-btn{width:100%;margin-top:12px;padding:8px;background:rgba(43,108,176,0.2);color:#2b6cb0;border:1px solid rgba(208,215,230,0.8);border-radius:6px;cursor:pointer;font-weight:500;font-size:12px;transition:all 0.2s;backdrop-filter:blur(8px) saturate(120%)}
+		#sidebar #share-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(43,108,176,0.2)}
+		#sidebar #share-btn.copied{background:rgba(76,175,80,0.2);color:#4caf50;border-color:rgba(76,175,80,0.4)}
+			footer.site-footer{position:fixed !important;inset:auto 0 0 0 !important;width:100vw !important;max-width:100vw !important;z-index:1000 !important;margin:0 !important;border-radius:0 !important;background:var(--glass-bg) !important;-webkit-backdrop-filter:blur(18px) saturate(145%) !important;backdrop-filter:blur(18px) saturate(145%) !important;padding:8px var(--bar-pad-x) !important;height:var(--footer-height) !important;box-sizing:border-box !important;border-top:1px solid rgba(230,233,239,0.6) !important;box-shadow:0 -2px 12px rgba(11,59,102,0.08) !important;display:flex;align-items:center;justify-content:center;text-align:center;color:#666;font-size:13px}
+		footer{background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
+		#share-btn,#jump-input{background:var(--glass-bg) !important;border:var(--glass-border) !important;backdrop-filter:blur(12px) saturate(125%) !important}
+		.footer-text{display:flex;align-items:center;gap:6px}
+			.footer-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:#2b6cb0;cursor:pointer;transition:opacity .2s,transform .2s,background-color .2s,color .2s;text-decoration:none;opacity:.78;border-radius:6px}
+			.footer-btn:hover{opacity:1;transform:translateY(-1px);background:rgba(43,108,176,0.25);color:#2b6cb0}
+		@media (max-width:768px){
+			:root{--bar-height:110px;--footer-height:50px}
+			body{padding-bottom:300px !important}
+			
+			/* 顶部栏两行布局 */
+			.topbar{padding:8px 12px;height:var(--bar-height);flex-wrap:wrap;gap:8px}
+			.brand{font-size:15px;width:100%;text-align:center;margin-bottom:4px}
+			.topbar-warning{display:none}
+			.search-wrap{width:100%;gap:8px}
+			#search-input{padding:10px 12px;font-size:14px;flex:1}
+			#search-btn{padding:10px 16px;font-size:14px;min-width:60px}
+			
+			/* 侧边栏隐藏 */
+			#sidebar{display:none}
+			
+			/* 内容区域适配 */
+			.main-container{max-width:100% !important;margin:0 auto 20px !important;padding:0 12px !important}
+			#entries{padding:0 12px !important;margin-left:0 !important;margin-right:0 !important}
+			h1{font-size:22px;margin:10px 0 4px}
+			
+			/* 卡片适配 - 移除 hover 效果，复制按钮始终显示 */
+			.entry-card{padding:14px 12px;margin:10px 0;border-radius:12px}
+			.entry-card:hover{transform:none;box-shadow:0 10px 30px rgba(11,20,45,0.06)}
+			.copy-btn{position:static;bottom:auto;right:auto;padding:8px 14px;font-size:13px;margin-top:10px;width:100%;text-align:center;opacity:1}
+			.entry-card:hover .copy-btn{opacity:1}
+			
+			/* 表格适配 */
+			table{font-size:13px}
+			th,td{padding:6px 8px}
+			
+			/* 悬浮按钮适配 - 统一样式 */
+			.side-fab{right:16px !important;width:48px !important;height:48px !important}
+			#scroll-to-top{bottom:100px !important}
+			#scroll-to-bottom{bottom:40px !important}
+			#page-prev{bottom:160px !important}
+			#page-next{bottom:220px !important}
+			.page-btn{right:16px !important}
+			.side-fab svg{width:20px;height:20px}
+			
+			/* 页脚适配 */
+			footer.site-footer{height:50px !important;padding:10px 12px !important}
+			footer.site-footer .footer-content{gap:8px}
+			.footer-text{font-size:12px}
+			.footer-btn{width:20px;height:20px}
+			.footer-btn svg{width:18px;height:18px}
+		}
+	</style>
+		<script>
+	(function(){
+		const INDEX_PATH = 'chunks/index.json';
+		const CHUNK_URL = (n) => `chunks/part-${n}.html`;
+		let indexData = null;
+		let conv = null;
+		let currentChunk = 0;
+		let loaded = new Map();
+
+		function loadScript(src){
+			return new Promise((res,rej)=>{
+				const s=document.createElement('script'); s.src=src; s.async=true; s.onload=()=>res(true); s.onerror=()=>rej(false); document.head.appendChild(s);
+			});
+		}
+
+		async function ensureConverter(){
+			console.log('✓ 使用本地简繁映射表 (s2t_map.js)');
+			// 使用全局的 s2tMap（从 s2t_map.js 加载）
+			if(typeof s2tMap === 'undefined') {
+				console.warn('⚠ s2tMap 未定义，等待加载...');
+				// 等待 s2t_map.js 加载
+				let retry = 0;
+				while(typeof s2tMap === 'undefined' && retry < 50) {
+					await new Promise(r => setTimeout(r, 100));
+					retry++;
+				}
+			}
+			
+			return {
+				toS: (t)=>t, // 暂不支持繁转简
+				toT: (t)=>{
+					// 简转繁（使用全局映射表）
+					if(typeof s2tMap === 'undefined') {
+						console.warn('⚠ s2tMap 仍未定义');
+						return t;
+					}
+					let result = '';
+					for(let i=0; i<t.length; i++){
+						const char = t[i];
+						result += s2tMap[char] || char;
+					}
+					return result;
+				}
+			};
+		}
+
+		async function fetchJSON(url){ try{ const r=await fetch(url); if(!r.ok) throw 0; return await r.json(); }catch(e){ console.error('加载失败: '+url, e); return null } }
+
+		function formatCardForCopy(card){
+			const lines = [];
+			const title = card.querySelector('h1')?.textContent?.trim();
+			if(title) lines.push(`【${title}】`);
+
+			const plainBlocks = Array.from(card.children).filter((el)=>{
+				if(!el || !el.tagName) return false;
+				const tag = el.tagName.toLowerCase();
+				return tag === 'p' || tag === 'div';
+			});
+			for(const block of plainBlocks){
+				const t = block.textContent?.replace(/\s+/g, ' ').trim();
+				if(t) lines.push(t);
+			}
+
+			const tables = card.querySelectorAll('table');
+			for(const table of tables){
+				const caption = table.querySelector('caption')?.textContent?.trim();
+				if(caption) lines.push(`\n${caption}`);
+
+				const rows = table.querySelectorAll('tr');
+				for(const row of rows){
+					const cells = row.querySelectorAll('th,td');
+					const rowText = Array.from(cells).map((cell)=>cell.textContent?.replace(/\s+/g, ' ').trim() || '').filter(Boolean).join(' | ');
+					if(rowText) lines.push(rowText);
+				}
+			}
+
+			const cleaned = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+			return `${cleaned}\n\n—— 汉语古音手册\n${location.href}`;
+		}
+
+		function updateButtons(){
+			const pagePrev = document.getElementById('page-prev');
+			const pageNext = document.getElementById('page-next');
+			if(pagePrev) {
+				pagePrev.disabled = currentChunk === 0;
+				pagePrev.style.opacity = currentChunk === 0 ? '0.4' : '1';
+				pagePrev.style.pointerEvents = currentChunk === 0 ? 'none' : 'auto';
+			}
+			if(pageNext) {
+				pageNext.disabled = currentChunk >= indexData.chunks - 1;
+				pageNext.style.opacity = currentChunk >= indexData.chunks - 1 ? '0.4' : '1';
+				pageNext.style.pointerEvents = currentChunk >= indexData.chunks - 1 ? 'none' : 'auto';
+			}
+		}
+
+		async function goToChunk(n){
+			if(n < 0 || n >= indexData.chunks) return;
+			currentChunk = n;
+			updateButtons();
+			const entries = document.getElementById('entries');
+			entries.innerHTML = '<div style="padding:20px;text-align:center;color:#999;">加载中...</div>';
+			loaded.delete(n);
+			await loadChunk(n);
+			window.scrollTo({top: 0, behavior: 'smooth'});
+		}
+
+		async function loadChunk(n){ 
+			if(loaded.has(n)) return; 
+			const url = CHUNK_URL(n);
+			console.log('开始加载', url);
+			try{ 
+				const r=await fetch(url); 
+				console.log('fetch 响应:', r.status, r.ok);
+				if(!r.ok) throw new Error('HTTP ' + r.status); 
+				const html = await r.text(); 
+				console.log('获取到 HTML，长度:', html.length);
+				const entries = document.getElementById('entries');
+				entries.innerHTML = '';
+				const wrapper = document.createElement('div'); 
+				wrapper.className='entry-chunk'; 
+				wrapper.innerHTML = html;
+				
+				const headingsForChunk = indexData.headings.filter(h=>h.chunk===n).sort((a,b)=>a.index-b.index);
+				const h1s = wrapper.querySelectorAll('h1');
+				console.log('找到', h1s.length, '个 h1 标签，期望', headingsForChunk.length, '个');
+				for(let i=0;i<h1s.length && i<headingsForChunk.length;i++){ 
+					try{ h1s[i].id = headingsForChunk[i].id; }catch(e){} 
+				}
+				
+				// 添加 show 类以使卡片可见，并为每个卡片添加复制按钮
+				const cards = wrapper.querySelectorAll('.entry-card');
+				console.log('为', cards.length, '个卡片添加 show 类和复制按钮');
+				for(let card of cards) {
+					// 只处理有 h1 标题的卡片，过滤掉孤立的字
+					const h1 = card.querySelector('h1');
+					if(!h1) {
+						// 没有 h1 的卡片是孤立字，直接移除
+						card.remove();
+						continue;
+					}
+					
+					card.classList.add('show');
+
+					// 添加复制按钮
+					if(!card.querySelector('.copy-btn')) {
+						const copyBtn = document.createElement('button');
+						copyBtn.className = 'copy-btn';
+						copyBtn.textContent = '复制';
+						copyBtn.addEventListener('click', (e) => {
+							e.stopPropagation();
+							const cardText = formatCardForCopy(card);
+							navigator.clipboard.writeText(cardText).then(() => {
+								copyBtn.classList.add('copied');
+								copyBtn.textContent = '已复制';
+								setTimeout(() => {
+									copyBtn.classList.remove('copied');
+									copyBtn.textContent = '复制';
+								}, 2000);
+							}).catch(err => console.error('复制失败:', err));
+						});
+						card.appendChild(copyBtn);
+					}
+				}
+				
+				entries.appendChild(wrapper);
+				loaded.set(n, html);
+				console.log('块', n, '加载完成');
+			}catch(e){ 
+				console.error('加载失败 chunk '+n, e);
+				const entries = document.getElementById('entries');
+				entries.innerHTML = '<div style="padding:20px;color:#d32f2f;text-align:center;">加载失败: ' + e.message + '</div>';
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', async ()=>{
+			const entries = document.getElementById('entries');
+			if(!entries) {
+				console.error('未找到 #entries div');
+				return;
+			}
+			
+			console.log('开始加载 INDEX_PATH:', INDEX_PATH);
+			indexData = await fetchJSON(INDEX_PATH);
+			
+			if(!indexData){ 
+				console.error('索引文件加载失败');
+				entries.innerHTML = '❌ 无法加载索引文件'; 
+				return; 
+			}
+			
+			console.log('索引加载成功，总块数:', indexData.chunks);
+			
+			console.log('开始加载第一个块');
+			await goToChunk(0);
+
+			if(location.hash){ 
+				const hid = location.hash.slice(1); 
+				const target = indexData.headings.find(h=>h.id===hid); 
+				if(target) await goToChunk(target.chunk);
+			}
+
+			const input = document.getElementById('search-input'); 
+			const btn = document.getElementById('search-btn');
+			
+			// 获取所有繁体字集合（用于快速查找）
+			const tradCharSet = new Set();
+			const charToHeading = new Map(); // 字 -> 标题对象
+			for(const h of indexData.headings){
+				const title = h.title;
+				if(title.length === 1) {
+					tradCharSet.add(title);
+					if(!charToHeading.has(title)) charToHeading.set(title, h);
+				}
+			}
+			console.log('索引中的繁体字数:', tradCharSet.size);
+			
+			function norm(s){ return (s||'').normalize('NFKC').trim(); }
+			
+			function findHeading(q){ 
+				if(!q) return null;
+				const qNorm = norm(q);
+				
+				// 直接在索引中查找
+				for(const h of indexData.headings){ 
+					if(norm(h.title) === qNorm) {
+						return h;
+					}
+					for(const v of h.variants||[]){ 
+						if(norm(v) === qNorm) {
+							return h;
+						}
+					}
+				}
+				
+				return null; 
+			}
+
+			async function performSearch(){ 
+				let q = (input.value||'').trim(); 
+				if(!q) return;
+				
+				console.log('=== 搜索开始 ===');
+				console.log('输入:', q);
+				
+				// 用户应该在左边面板转换后，在右边面板直接输入繁体字
+				const h = findHeading(q);
+				
+				if(!h){ 
+					console.log('✗ 未找到匹配项');
+					input.classList.add('no-result'); 
+					setTimeout(()=>input.classList.remove('no-result'),600); 
+					return; 
+				}
+				
+				console.log('✓ 找到:', h.title);
+				console.log('=== 搜索成功 ===');
+				await goToChunk(h.chunk);
+				setTimeout(() => {
+					const el = document.getElementById(h.id); 
+					if(el){ 
+						el.scrollIntoView({behavior:'smooth',block:'center'}); 
+						el.classList.add('highlighted'); 
+						setTimeout(()=>el.classList.remove('highlighted'),2000); 
+						history.replaceState(null,'','#'+h.id); 
+					}
+				}, 100);
+			}
+
+			input.addEventListener('keydown', e=>{ if(e.key==='Enter') performSearch(); });
+			btn.addEventListener('click', performSearch);
+
+			// 右侧翻页按钮事件绑定
+			const pagePrev = document.getElementById('page-prev');
+			const pageNext = document.getElementById('page-next');
+
+			if(pagePrev) pagePrev.addEventListener('click', () => goToChunk(currentChunk - 1));
+			if(pageNext) pageNext.addEventListener('click', () => goToChunk(currentChunk + 1));
+
+			updateButtons();
+		});
+	})();
+	</script>
+</head>
+<body>
+<script>
+// 在 DOM 加载前检测设备类型
+(function() {
+	const isMobile = () => window.innerWidth <= 768;
+	const updateDeviceClass = () => {
+		if (isMobile()) {
+			document.body.classList.add('mobile');
+			document.body.classList.remove('desktop');
+		} else {
+			document.body.classList.add('desktop');
+			document.body.classList.remove('mobile');
+		}
+	};
+	updateDeviceClass();
+	window.addEventListener('resize', updateDeviceClass);
+	window.__isMobile = isMobile;
+})();
+</script>
+<script>
+// 翻页按钮功能
+window.addEventListener('DOMContentLoaded', () => {
+	const pagePrevBtn = document.getElementById('page-prev');
+	const pageNextBtn = document.getElementById('page-next');
+	if(pagePrevBtn) pagePrevBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+		if(window.currentChunk > 0) window.goToChunk(window.currentChunk - 1);
+	});
+	if(pageNextBtn) pageNextBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+		if(window.currentChunk < window.indexData.chunks - 1) window.goToChunk(window.currentChunk + 1);
+	});
+});
+</script>
+<header class="topbar">
+	<div class="brand">汉语古音手册</div>
+	<div style="color:#e74c3c;font-size:12px;font-weight:500;margin-right:auto;" class="topbar-warning">※ 仅支持繁体字</div>
+	<div class="search-wrap">
+		<input id="search-input" placeholder="输入繁体字搜索" aria-label="搜索字">
+		<button id="search-btn">查找</button>
+	</div>
+</header>
+
+<div id="sidebar">
+	<img src="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" alt="汉语古音手册">
+	<button id="share-btn">👋 分享</button>
+</div>
+
+<div class="main-container">
+	<div id="entries"></div>
+</div>
+
+<button id="page-prev" class="side-fab page-btn" title="上一页">
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="15 18 9 12 15 6"></polyline>
+	</svg>
+</button>
+<button id="page-next" class="side-fab page-btn" title="下一页">
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="9 18 15 12 9 6"></polyline>
+	</svg>
+</button>
+
+<div style="height:30px"></div>
+
+<footer class="site-footer">
+	<div class="footer-content">
+		<div class="footer-text">© 2026 Takion Kroslin</div>
+		<a href="https://github.com/TakionKroslin/dictionary" target="_blank" class="footer-btn" title="GitHub" aria-label="GitHub">
+			<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+				<path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.09 3.3 9.41 7.88 10.94.58.1.79-.25.79-.56v-2.02c-3.2.69-3.88-1.55-3.88-1.55-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.09 1.75 1.18 1.75 1.18 1.01 1.75 2.67 1.24 3.33.95.1-.73.4-1.24.72-1.52-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.19a10.8 10.8 0 0 1 5.74 0c2.18-1.5 3.14-1.19 3.14-1.19.62 1.58.23 2.75.11 3.04.73.81 1.18 1.85 1.18 3.11 0 4.42-2.7 5.4-5.27 5.68.41.36.78 1.07.78 2.15v3.19c0 .31.21.67.8.56a11.54 11.54 0 0 0 7.87-10.94C23.5 5.66 18.35.5 12 .5z"/>
+			</svg>
+		</a>
+	</div>
+</footer>
+
+<button id="scroll-to-top" class="side-fab" title="回到顶部">
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="6 14 12 8 18 14"></polyline>
+	</svg>
+</button>
+<button id="scroll-to-bottom" class="side-fab" title="到底部">
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="6 14 12 8 18 14"></polyline>
+	</svg>
+</button>
+<button id="page-prev" class="side-fab page-btn" title="上一页">
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="15 18 9 12 15 6"></polyline>
+	</svg>
+</button>
+<button id="page-next" class="side-fab page-btn" title="下一页">
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<polyline points="9 18 15 12 9 6"></polyline>
+	</svg>
+</button>
+
+<script>
+// 分享按钮功能
+const shareBtn = document.getElementById('share-btn');
+if(shareBtn) {
+	shareBtn.addEventListener('click', () => {
+		const shareUrl = ""; // 预先留空，后面修改
+		navigator.clipboard.writeText(shareUrl).then(() => {
+			shareBtn.classList.add('copied');
+			shareBtn.textContent = '🔗 链接已复制';
+			setTimeout(() => {
+				shareBtn.classList.remove('copied');
+				shareBtn.textContent = '👋 分享给好友';
+			}, 3000);
+		}).catch(err => console.error('复制失败:', err));
+	});
+}
+
+// 回到顶部/底部按钮功能
+const scrollBtn = document.getElementById('scroll-to-top');
+const scrollBottomBtn = document.getElementById('scroll-to-bottom');
+window.addEventListener('scroll', () => {
+	const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+	if(window.scrollY > 300) {
+		scrollBtn.classList.add('show');
+	} else {
+		scrollBtn.classList.remove('show');
+	}
+	if(window.scrollY < maxScroll - 300) {
+		scrollBottomBtn.classList.add('show');
+	} else {
+		scrollBottomBtn.classList.remove('show');
+	}
+});
+scrollBtn.addEventListener('click', () => {
+	window.scrollTo({top: 0, behavior: 'smooth'});
+});
+scrollBottomBtn.addEventListener('click', () => {
+	window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'smooth'});
+});
+</script>
+
+</body>
+</html>
