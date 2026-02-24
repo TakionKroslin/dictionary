@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>文章总览 - 汉语古音手册</title>
+  <link rel="icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" type="image/png" />
+  <style>
+    :root{--bar-height:64px;--glass-bg:rgba(255,255,255,.34);--glass-border:1px solid rgba(208,215,230,.72);--font-sans:'HarmonyOS Sans SC','HarmonyOS Sans','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Segoe UI',sans-serif;--btn-radius:10px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:var(--font-sans);background:#ecf2f9;color:#1f3349;padding-top:var(--bar-height)}
+    .topbar{position:fixed;top:0;left:0;right:0;height:var(--bar-height);display:flex;align-items:center;gap:10px;padding:12px 18px;background:rgba(255,255,255,.3);backdrop-filter:blur(15px) saturate(130%);border-bottom:1px solid rgba(230,233,239,.6);box-shadow:0 2px 12px rgba(11,59,102,.08);z-index:1000}
+    .brand{font-weight:700;color:#2b6cb0;text-decoration:none}
+    .btn{margin-left:auto;padding:8px 12px;border-radius:var(--btn-radius);text-decoration:none;color:#2b6cb0;background:var(--glass-bg);border:var(--glass-border);backdrop-filter:blur(12px) saturate(125%)}
+    .wrap{max-width:1180px;margin:24px auto;padding:0 14px;display:grid;grid-template-columns:1fr 320px;gap:18px}
+    .panel{background:var(--glass-bg);border:var(--glass-border);border-radius:16px;backdrop-filter:blur(12px) saturate(125%);box-shadow:0 12px 28px rgba(13,29,52,.08);padding:16px}
+    h1{margin:0 0 8px;color:#173c64}
+    .muted{color:#5f7a97;font-size:13px}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+    .item{display:block;padding:12px;border-radius:12px;border:var(--glass-border);background:rgba(255,255,255,.52);text-decoration:none;color:inherit;transition:transform .2s, box-shadow .2s, background .2s}
+    .item:hover{transform:translateY(-1px);background:rgba(255,255,255,.74);box-shadow:0 6px 16px rgba(13,29,52,.09)}
+    .item-title{color:#1e4f85;font-weight:700}
+    .meta{margin-top:4px;color:#5f7a97;font-size:13px}
+    .summary{margin-top:6px;font-size:14px;line-height:1.65}
+    .cat-group{margin-bottom:14px}
+    .cat-title{font-size:13px;font-weight:700;color:#2b6cb0;margin-bottom:8px}
+    .timeline{display:flex;flex-direction:column;gap:8px}
+    .time-item{display:block;padding:9px 10px;border-radius:10px;border:var(--glass-border);background:rgba(255,255,255,.52);text-decoration:none;color:inherit;transition:transform .2s, background .2s}
+    .time-item:hover{transform:translateY(-1px);background:rgba(255,255,255,.74)}
+    .time-item-title{text-decoration:none;color:#2b6cb0;font-size:14px}
+    @media (max-width:980px){
+      :root{--bar-height:58px}
+      .wrap{grid-template-columns:1fr}
+      .btn{margin-left:0}
+      .topbar{flex-wrap:wrap;height:auto;padding:8px 12px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">汉语古音手册 · 文章总览</a>
+    <a class="btn" href="index.html">返回词典</a>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <h1>全部文章</h1>
+      <div class="muted">按发布时间倒序，支持后续扩展到更多栏目。</div>
+      <div id="all-list" class="list"><div class="item">加载中...</div></div>
+    </section>
+    <aside class="panel">
+      <div class="cat-group">
+        <div class="cat-title">按分类浏览</div>
+        <div id="cat-list"></div>
+      </div>
+      <div>
+        <div class="cat-title">时间线</div>
+        <div id="timeline" class="timeline"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function(){
+      const CATALOG_PATH = 'articles/catalog.md';
+      function parseCatalog(md){
+        const out=[];
+        for(const raw of (md||'').split(/\r?\n/)){
+          const line=raw.trim();
+          const m=line.match(/^- \[(.+?)\]\((.+?)\)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)(?:\s*\|\s*(.+))?$/);
+          if(!m) continue;
+          out.push({title:m[1].trim(),path:m[2].trim(),date:m[3].trim(),author:m[4].trim(),summary:(m[5]||'').trim(),category:'未分类'});
+        }
+        return out;
+      }
+      function parseMetaTag(md){
+        const m=(md||'').match(/<article-meta\s+([^>]*?)\s*><\/article-meta>/i) || (md||'').match(/<article-meta\s+([^>]*?)\s*\/>/i);
+        if(!m) return {};
+        const attrs={};
+        const re=/(\w+)\s*=\s*"([^"]*)"/g;
+        let t;
+        while((t=re.exec(m[1]))){ attrs[t[1].toLowerCase()] = t[2]; }
+        return attrs;
+      }
+      function toDate(x){ const d=new Date(x); return Number.isNaN(+d)?new Date('1970-01-01'):d; }
+      function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+      async function load(){
+        const all = document.getElementById('all-list');
+        const cat = document.getElementById('cat-list');
+        const timeline = document.getElementById('timeline');
+        try{
+          const text = await fetch(CATALOG_PATH,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); });
+          let items = parseCatalog(text);
+          await Promise.all(items.map(async (it)=>{
+            try{
+              const md = await fetch(it.path,{cache:'no-store'}).then(r=>r.ok?r.text():'');
+              const meta = parseMetaTag(md);
+              if(meta.date) it.date = meta.date;
+              if(meta.author) it.author = meta.author;
+              if(meta.category) it.category = meta.category;
+              if(meta.title) it.title = meta.title;
+            }catch(_){ }
+          }));
+
+          items = items.sort((a,b)=>toDate(b.date)-toDate(a.date));
+
+          all.innerHTML = items.map((it)=>{
+            const href = `article.html?file=${encodeURIComponent(it.path)}`;
+            return `<a class="item" href="${href}"><div class="item-title">${esc(it.title)}</div><div class="meta">${esc(it.date)} · ${esc(it.author)} · ${esc(it.category||'未分类')}</div><div class="summary">${esc(it.summary)}</div></a>`;
+          }).join('');
+
+          const group = new Map();
+          for(const it of items){
+            const k = it.category || '未分类';
+            if(!group.has(k)) group.set(k,[]);
+            group.get(k).push(it);
+          }
+          cat.innerHTML = Array.from(group.entries()).map(([k,v])=>{
+            const links = v.map((it)=>`<a class="time-item" style="margin:5px 0;" href="article.html?file=${encodeURIComponent(it.path)}"><span class="time-item-title">${esc(it.title)}</span></a>`).join('');
+            return `<div class="time-item"><div style="font-size:12px;color:#5f7a97;margin-bottom:6px;">${esc(k)} (${v.length})</div>${links}</div>`;
+          }).join('');
+
+          timeline.innerHTML = items.map((it)=>`<a class="time-item" href="article.html?file=${encodeURIComponent(it.path)}"><div style="font-size:12px;color:#5f7a97;">${esc(it.date)}</div><span class="time-item-title">${esc(it.title)}</span></a>`).join('');
+        }catch(err){
+          all.innerHTML = `<div class="item">加载失败：${esc(String(err.message||err))}</div>`;
+          cat.innerHTML = '<div class="time-item">-</div>';
+          timeline.innerHTML = '<div class="time-item">-</div>';
+        }
+      }
+      load();
+    })();
+  </script>
+</body>
+</html>
