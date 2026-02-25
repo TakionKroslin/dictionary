@@ -1,4 +1,4 @@
-﻿<article-meta title="最新版本功能全解：统一UI、移动端入口、整卡点击、目录联动与文章系统终版" date="2026-02-24" author="Takion Kroslin" category="版本更新" cover="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80"></article-meta>
+﻿<article-meta title="最新版本功能全解：统一UI、移动端入口、整卡点击、目录联动与文章系统终版" date="2026-02-25" author="Takion Kroslin" category="版本更新" cover="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80"></article-meta>
 
 ## 一、UI统一：按钮全部改为圆角矩形（可视化实景）
 
@@ -127,3 +127,49 @@ $$
 6. 新增文章总览页，支持时间线和分类管理。
 
 从“可用”到“一致”和“可持续维护”，这一版已经把系统打通。后续新增内容只需遵守 `catalog.md + article-meta` 规范即可扩展。
+
+## 十、续写：移动端 Header 简化为“角落按钮优先”
+
+这一轮采用的是“角落按钮优先”布局，参数直接来自当前代码：
+
+- 角落按钮尺寸：`48px × 48px`
+- 圆角：`12px`
+- 玻璃背景：`rgba(255,255,255,0.35)`
+- 边框：`1px solid rgba(208,215,230,0.72)`
+- 模糊：`blur(12px) saturate(125%)`
+
+<div style="position:relative;height:84px;max-width:560px;border-radius:14px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.42);">
+  <button style="position:absolute;top:10px;left:10px;width:48px;height:48px;border-radius:12px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);color:#2b6cb0;font-size:14px;font-weight:600;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">目录</button>
+  <button style="position:absolute;top:10px;right:10px;width:48px;height:48px;border-radius:12px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);color:#2b6cb0;font-size:14px;font-weight:600;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">搜索</button>
+</div>
+
+## 十一、续写：Article 底部工具区去重
+
+这里按源码做了去重：把重复动作移除，只保留“文章总览 + 系统分享”。
+
+<div style="margin-top:6px;padding:16px;border-radius:14px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.52);display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;max-width:760px;">
+  <div style="width:110px;height:110px;border-radius:10px;border:1px solid rgba(208,215,230,.72);background:#fff;display:flex;align-items:center;justify-content:center;color:#5f7a97;font-size:12px;">二维码</div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:14px;color:#2b6cb0;font-weight:600;">移动端阅读与分享</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="#" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;background:rgba(255,255,255,0.35);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;text-decoration:none;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">文章总览</a>
+      <button style="min-height:44px;padding:8px 12px;background:rgba(255,255,255,0.35);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">分享给好友</button>
+    </div>
+  </div>
+</div>
+
+## 十二、当前版本定位
+
+这一版的移动端 footer 统一为“全局悬浮 + 圆角矩形”，不是胶囊圆边：
+
+- 高度：`64px`
+- 位置：`inset: auto 10px 10px 10px`
+- 圆角：`14px`
+- 玻璃：`blur(18px) saturate(145%)`
+- iPhone 兼容：补齐 `-webkit-backdrop-filter`，并提供无 blur 的背景 fallback
+
+<div style="position:relative;height:98px;max-width:560px;border-radius:12px;border:1px dashed rgba(208,215,230,.72);background:rgba(236,242,249,.8);">
+  <div style="position:absolute;left:10px;right:10px;bottom:10px;height:64px;border-radius:14px;border:1px solid rgba(230,233,239,.6);background:rgba(255,255,255,.35);box-shadow:0 -2px 10px rgba(11,59,102,.06);display:flex;align-items:center;justify-content:center;color:#666;font-size:13px;-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);">
+    © 2026 Takion Kroslin | GitHub
+  </div>
+</div>

@@ -7,7 +7,7 @@ export default defineConfig({
     target: "esnext",
     minify: false,
     rollupOptions: {
-      input: path.resolve(__dirname, "intex.html"),
+      input: path.resolve(__dirname, "index.html"),
       output: {
         dir: path.resolve(__dirname, "dist")
       }
