@@ -10,16 +10,16 @@
 	<link rel="stylesheet" type="text/css" href="汉语古音手册.css">
 	<script src="s2t_map.js"></script>
 	<style>
-		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.3);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 72px);--font-sans:'HarmonyOS Sans SC','HarmonyOS Sans','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Segoe UI',sans-serif;--btn-radius:10px}
+		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.35);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 72px);--font-sans:'HarmonyOS Sans SC','HarmonyOS Sans','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Segoe UI',sans-serif;--btn-radius:10px}
 		body{margin:0 !important;font-family:var(--font-sans); line-height:1.6; color:#222; background:#ecf2f9; padding-top:var(--bar-height); padding-bottom:var(--bottom-safe)}
-			.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.3);backdrop-filter:blur(15px) saturate(130%);padding:var(--bar-pad-y) var(--bar-pad-x);box-shadow:0 2px 12px rgba(11,59,102,0.08);height:var(--bar-height);box-sizing:border-box;border-bottom:1px solid rgba(230,233,239,0.6);display:flex;align-items:center;gap:12px}
+			.topbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.35);-webkit-backdrop-filter:blur(15px) saturate(130%);backdrop-filter:blur(15px) saturate(130%);padding:var(--bar-pad-y) var(--bar-pad-x);box-shadow:0 2px 12px rgba(11,59,102,0.08);height:var(--bar-height);box-sizing:border-box;border-bottom:1px solid rgba(230,233,239,0.6);display:flex;align-items:center;gap:12px}
 		.brand{font-weight:700;font-size:18px;color:#2b6cb0;white-space:nowrap}
 		.search-wrap{flex:1;display:flex;align-items:center;gap:8px}
-		#search-input{flex:1;padding:10px 12px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:16px;transition:border-color 0.2s,box-shadow 0.2s;backdrop-filter:blur(12px) saturate(125%)}
+		#search-input{flex:1;padding:10px 12px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:16px;transition:border-color 0.2s,box-shadow 0.2s;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%)}
 		#search-input:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
-		#search-mode{padding:10px 10px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;color:#222}
+		#search-mode{padding:10px 10px;border:1px solid #d0d7e6;border-radius:8px;background:var(--glass-bg);font-size:14px;cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s;color:#222;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%)}
 		#search-mode:focus{outline:none;border-color:#2b6cb0;box-shadow:0 0 0 2px rgba(43,108,176,0.1)}
-		#search-btn{padding:10px 16px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:var(--btn-radius);cursor:pointer;transition:all 0.2s;font-weight:500;min-width:60px;backdrop-filter:blur(12px) saturate(125%);}
+		#search-btn{padding:10px 16px;background:var(--glass-bg);color:#2b6cb0;border:var(--glass-border);border-radius:var(--btn-radius);cursor:pointer;transition:all 0.2s;font-weight:500;min-width:60px;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);}
 		#search-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-1px);box-shadow:0 2px 8px rgba(43,108,176,0.15)}
 		#search-btn:active{transform:translateY(0)}
 		#search-input.no-result{animation:shake .28s}
@@ -58,15 +58,15 @@
 		#share-btn:hover{background:rgba(43,108,176,0.3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(43,108,176,0.2)}
 		#share-btn.copied{background:rgba(76,175,80,0.2);color:#4caf50;border-color:rgba(76,175,80,0.4)}
 		#sidebar{position:fixed;left:24px;top:80px;width:470px;z-index:500;transition:all 0.3s ease}
-		#sidebar-mobile-toggle{display:none !important;position:fixed;left:12px;right:auto;bottom:calc(var(--footer-height) + 30px);z-index:1300;width:auto;height:42px;padding:0 12px;border-radius:var(--btn-radius);opacity:1;pointer-events:auto}
+		#sidebar-mobile-toggle{display:none !important;position:fixed;left:12px;right:auto;bottom:calc(var(--footer-height) + 30px);z-index:1300;width:48px;height:48px;padding:0;border-radius:var(--btn-radius);opacity:1;pointer-events:auto}
 		#articles-mobile-btn{display:none !important;position:fixed;right:16px;bottom:280px;z-index:1300;width:48px;height:48px;border-radius:var(--btn-radius);opacity:1 !important;pointer-events:auto !important;transform:none !important;text-decoration:none}
 		.sidebar-overlay{display:none}
-		.sidebar-card{padding:12px;border-radius:16px;background:rgba(255,255,255,0.46);border:1px solid rgba(255,255,255,0.72);box-shadow:0 16px 40px rgba(16,34,58,0.10);backdrop-filter:blur(18px) saturate(130%)}
+		.sidebar-card{padding:12px;border-radius:16px;background:rgba(255,255,255,0.46);border:1px solid rgba(255,255,255,0.72);box-shadow:0 16px 40px rgba(16,34,58,0.10);-webkit-backdrop-filter:blur(18px) saturate(130%);backdrop-filter:blur(18px) saturate(130%)}
 		.sidebar-cover-wrap{position:relative;overflow:hidden;border-radius:12px}
 		.sidebar-cover-wrap::after{content:none}
 		#sidebar img{width:100%;height:138px;border-radius:12px;box-shadow:0 2px 8px rgba(43,108,176,0.12);object-fit:cover;transition:all 0.4s ease;display:block}
 		#sidebar img:hover{transform:scale(1.04);filter:saturate(1.1)}
-		#sidebar #share-btn{width:100%;margin-top:10px;padding:9px;background:rgba(43,108,176,0.16);color:#1f4f86;border:1px solid rgba(43,108,176,0.26);border-radius:var(--btn-radius);cursor:pointer;font-weight:600;font-size:12px;transition:all 0.2s;backdrop-filter:blur(8px) saturate(120%)}
+		#sidebar #share-btn{width:100%;margin-top:10px;padding:9px;background:rgba(43,108,176,0.16);color:#1f4f86;border:1px solid rgba(43,108,176,0.26);border-radius:var(--btn-radius);cursor:pointer;font-weight:600;font-size:12px;transition:all 0.2s;-webkit-backdrop-filter:blur(8px) saturate(120%);backdrop-filter:blur(8px) saturate(120%)}
 		#sidebar #share-btn:hover{background:rgba(43,108,176,0.25);transform:translateY(-1px);box-shadow:0 4px 12px rgba(43,108,176,0.2)}
 		#sidebar #share-btn.copied{background:rgba(76,175,80,0.2);color:#2f7a3f;border-color:rgba(76,175,80,0.4)}
 		.sidebar-slogan{margin:12px 4px 10px;color:#1f3f67;font-size:12px;line-height:1.55}
@@ -93,24 +93,28 @@
 		.footer-link svg{width:12px;height:12px;display:block}
 			.footer-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;color:#2b6cb0;cursor:pointer;transition:opacity .2s,transform .2s,background-color .2s,color .2s;text-decoration:none;opacity:.78;border-radius:6px}
 			.footer-btn:hover{opacity:1;transform:translateY(-1px);background:rgba(43,108,176,0.25);color:#2b6cb0}
+		@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
+			.topbar,#search-input,#search-mode,#search-btn,.side-fab,.sidebar-card,#sidebar #share-btn,footer.site-footer{background:rgba(255,255,255,0.78) !important}
+		}
 		@media (min-width:769px){
 			#sidebar-mobile-toggle{display:none !important}
 		}
 		@media (max-width:768px){
-			:root{--bar-height:110px;--footer-height:50px}
-			body{padding-bottom:300px !important}
+			:root{--bar-height:72px;--footer-height:64px}
+			body{padding-top:102px !important;padding-bottom:300px !important}
 			
 			/* 顶部栏两行布局 */
-			.topbar{padding:8px 12px;height:var(--bar-height);flex-wrap:wrap;gap:8px}
-			.brand{font-size:15px;width:100%;text-align:center;margin-bottom:4px}
-			.topbar-warning{display:none}
-			.search-wrap{width:100%;gap:8px}
-			#search-input{padding:10px 12px;font-size:14px;flex:1}
-			#search-btn{padding:10px 16px;font-size:14px;min-width:60px}
+			.topbar{padding:0;background:transparent;backdrop-filter:none;border:0;box-shadow:none;height:0}
+			.brand,.topbar-warning{display:none}
+			.search-wrap{width:100%;gap:8px;padding:6px 10px 0}
+			#search-input{height:44px;padding:10px 12px;font-size:14px;flex:1}
+			#search-btn{height:44px;padding:10px 16px;font-size:14px;min-width:60px}
 			
 			/* 侧边栏隐藏 */
 			#sidebar-mobile-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;opacity:1 !important;pointer-events:auto !important;transform:none !important}
 			#articles-mobile-btn{display:inline-flex !important;align-items:center;justify-content:center}
+			#sidebar-mobile-toggle{top:10px;left:10px;bottom:auto}
+			#articles-mobile-btn{top:10px;right:10px;bottom:auto}
 			.sidebar-overlay{display:block;position:fixed;inset:0;background:rgba(10,22,38,.32);backdrop-filter:blur(3px);z-index:490;opacity:0;pointer-events:none;transition:opacity .25s ease}
 			#sidebar{display:block;left:12px;top:126px;width:min(92vw,470px);max-height:calc(100vh - 190px);overflow:auto;z-index:500;transform:translateX(-115%);opacity:0;pointer-events:none}
 			body.sidebar-open #sidebar{transform:translateX(0);opacity:1;pointer-events:auto}
@@ -133,15 +137,15 @@
 			
 			/* 悬浮按钮适配 - 统一样式 */
 			.side-fab{right:16px !important;width:48px !important;height:48px !important}
-			#scroll-to-top{bottom:100px !important}
-			#scroll-to-bottom{bottom:40px !important}
-			#page-prev{bottom:160px !important}
-			#page-next{bottom:220px !important}
+			#scroll-to-top{bottom:114px !important}
+			#scroll-to-bottom{bottom:54px !important}
+			#page-prev{bottom:174px !important}
+			#page-next{bottom:234px !important}
 			.page-btn{right:16px !important}
 			.side-fab svg{width:20px;height:20px}
 			
 			/* 页脚适配 */
-			footer.site-footer{height:50px !important;padding:10px 12px !important}
+			footer.site-footer{inset:auto 10px 10px 10px !important;width:auto !important;max-width:none !important;height:64px !important;padding:10px 12px !important;border:1px solid rgba(230,233,239,0.6) !important;border-radius:14px !important;box-shadow:0 -2px 10px rgba(11,59,102,0.06) !important}
 			footer.site-footer .footer-content{gap:8px}
 			.footer-text{font-size:12px}
 			.footer-btn{width:20px;height:20px}
