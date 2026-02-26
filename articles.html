@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>文章总览 - 汉语古音手册</title>
   <link rel="icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" type="image/png" />
+  <link rel="prefetch" href="index.html" as="document" />
+  <link rel="prefetch" href="article.html" as="document" />
+  <link rel="prefetch" href="articles/catalog.md" as="fetch" crossorigin />
   <style>
     :root{--bar-height:64px;--footer-height:50px;--glass-bg:rgba(255,255,255,.35);--glass-border:1px solid rgba(208,215,230,.72);--font-sans:'HarmonyOS Sans SC','HarmonyOS Sans','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Segoe UI',sans-serif;--btn-radius:10px;--bottom-safe:calc(var(--footer-height) + 72px)}
     *{box-sizing:border-box}
@@ -144,18 +147,8 @@
         const cat = document.getElementById('cat-list');
         const timeline = document.getElementById('timeline');
         try{
-          const text = await fetch(CATALOG_PATH,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); });
+          const text = await fetch(CATALOG_PATH,{cache:'force-cache'}).then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); });
           let items = parseCatalog(text);
-          await Promise.all(items.map(async (it)=>{
-            try{
-              const md = await fetch(it.path,{cache:'no-store'}).then(r=>r.ok?r.text():'');
-              const meta = parseMetaTag(md);
-              if(meta.date) it.date = meta.date;
-              if(meta.author) it.author = meta.author;
-              if(meta.category) it.category = meta.category;
-              if(meta.title) it.title = meta.title;
-            }catch(_){ }
-          }));
 
           items = items.sort((a,b)=>toDate(b.date)-toDate(a.date));
 

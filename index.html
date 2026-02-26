@@ -1,13 +1,16 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>汉语古音手册 — 词典</title>
+	<title>姹夎鍙ら煶鎵嬪唽 鈥?璇嶅吀</title>
 	<link rel="icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" type="image/png">
+	<link rel="prefetch" href="articles.html" as="document">
+	<link rel="prefetch" href="article.html" as="document">
+	<link rel="prefetch" href="articles/catalog.md" as="fetch" crossorigin>
 	<link rel="shortcut icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
 	<link rel="apple-touch-icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
-	<link rel="stylesheet" type="text/css" href="汉语古音手册.css">
+	<link rel="stylesheet" type="text/css" href="姹夎鍙ら煶鎵嬪唽.css">
 	<script src="s2t_map.js"></script>
 	<style>
 		:root{--bar-height:64px;--footer-height:50px;--bar-pad-x:18px;--bar-pad-y:12px;--glass-bg:rgba(255,255,255,0.35);--glass-border:1px solid rgba(208,215,230,0.72);--bottom-safe:calc(var(--footer-height) + 72px);--font-sans:'HarmonyOS Sans SC','HarmonyOS Sans','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','Segoe UI',sans-serif;--btn-radius:10px}
@@ -103,14 +106,14 @@
 			:root{--bar-height:72px;--footer-height:64px}
 			body{padding-top:102px !important;padding-bottom:300px !important}
 			
-			/* 顶部栏两行布局 */
+			/* 椤堕儴鏍忎袱琛屽竷灞€ */
 			.topbar{padding:0;background:transparent;backdrop-filter:none;border:0;box-shadow:none;height:0}
 			.brand,.topbar-warning{display:none}
 			.search-wrap{width:calc(100% - 24px);margin:0 auto;gap:8px;padding:6px 0 0}
 			#search-input{height:40px;padding:0 12px;font-size:14px;line-height:40px;box-sizing:border-box;flex:1;background:rgba(255,255,255,0.52);border:1px solid rgba(208,215,230,0.82);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 4px 14px rgba(11,59,102,0.08)}
 			#search-btn{height:40px;padding:0 14px;font-size:14px;min-width:60px;box-sizing:border-box}
 			
-			/* 侧边栏隐藏 */
+			/* 渚ц竟鏍忛殣钘?*/
 			#sidebar-mobile-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;opacity:1 !important;pointer-events:auto !important;transform:none !important}
 			#articles-mobile-btn{display:inline-flex !important;align-items:center;justify-content:center}
 			#sidebar-mobile-toggle{top:10px;left:10px;bottom:auto}
@@ -120,22 +123,22 @@
 			body.sidebar-open #sidebar{transform:translateX(0);opacity:1;pointer-events:auto}
 			body.sidebar-open .sidebar-overlay{opacity:1;pointer-events:auto}
 			
-			/* 内容区域适配 */
+			/* 鍐呭鍖哄煙閫傞厤 */
 			.main-container{max-width:100% !important;margin:0 auto 20px !important;padding:0 12px !important}
 			#entries{padding:0 12px !important;margin-left:0 !important;margin-right:0 !important}
 			h1{font-size:22px;margin:10px 0 4px}
 			
-			/* 卡片适配 - 移除 hover 效果，复制按钮始终显示 */
+			/* 鍗＄墖閫傞厤 - 绉婚櫎 hover 鏁堟灉锛屽鍒舵寜閽缁堟樉绀?*/
 			.entry-card{padding:14px 12px;margin:10px 0;border-radius:12px}
 			.entry-card:hover{transform:none;box-shadow:0 10px 30px rgba(11,20,45,0.06)}
 			.copy-btn{position:static;bottom:auto;right:auto;padding:8px 14px;font-size:13px;margin-top:10px;width:100%;text-align:center;opacity:1}
 			.entry-card:hover .copy-btn{opacity:1}
 			
-			/* 表格适配 */
+			/* 琛ㄦ牸閫傞厤 */
 			table{font-size:13px}
 			th,td{padding:6px 8px}
 			
-			/* 悬浮按钮适配 - 统一样式 */
+			/* 鎮诞鎸夐挳閫傞厤 - 缁熶竴鏍峰紡 */
 			.side-fab{right:16px !important;width:48px !important;height:48px !important}
 			#scroll-to-top{bottom:114px !important}
 			#scroll-to-bottom{bottom:54px !important}
@@ -144,7 +147,7 @@
 			.page-btn{right:16px !important}
 			.side-fab svg{width:20px;height:20px}
 			
-			/* 页脚适配 */
+			/* 椤佃剼閫傞厤 */
 			footer.site-footer{inset:auto 12px 10px 12px !important;width:auto !important;max-width:none !important;height:64px !important;padding:10px 12px !important;border:1px solid rgba(230,233,239,0.6) !important;border-radius:14px !important;box-shadow:0 -2px 10px rgba(11,59,102,0.06) !important}
 			footer.site-footer .footer-content{gap:8px}
 			.footer-text{font-size:12px}
@@ -169,11 +172,11 @@
 		}
 
 		async function ensureConverter(){
-			console.log('✓ 使用本地简繁映射表 (s2t_map.js)');
-			// 使用全局的 s2tMap（从 s2t_map.js 加载）
+			console.log('鉁?浣跨敤鏈湴绠€绻佹槧灏勮〃 (s2t_map.js)');
+			// 浣跨敤鍏ㄥ眬鐨?s2tMap锛堜粠 s2t_map.js 鍔犺浇锛?
 			if(typeof s2tMap === 'undefined') {
-				console.warn('⚠ s2tMap 未定义，等待加载...');
-				// 等待 s2t_map.js 加载
+				console.warn('鈿?s2tMap 鏈畾涔夛紝绛夊緟鍔犺浇...');
+				// 绛夊緟 s2t_map.js 鍔犺浇
 				let retry = 0;
 				while(typeof s2tMap === 'undefined' && retry < 50) {
 					await new Promise(r => setTimeout(r, 100));
@@ -182,11 +185,11 @@
 			}
 			
 			return {
-				toS: (t)=>t, // 暂不支持繁转简
+				toS: (t)=>t, // 鏆備笉鏀寔绻佽浆绠€
 				toT: (t)=>{
-					// 简转繁（使用全局映射表）
+					// 绠€杞箒锛堜娇鐢ㄥ叏灞€鏄犲皠琛級
 					if(typeof s2tMap === 'undefined') {
-						console.warn('⚠ s2tMap 仍未定义');
+						console.warn('鈿?s2tMap 浠嶆湭瀹氫箟');
 						return t;
 					}
 					let result = '';
@@ -199,7 +202,7 @@
 			};
 		}
 
-		async function fetchJSON(url){ try{ const r=await fetch(url); if(!r.ok) throw 0; return await r.json(); }catch(e){ console.error('加载失败: '+url, e); return null } }
+		async function fetchJSON(url){ try{ const r=await fetch(url, { cache: 'force-cache' }); if(!r.ok) throw 0; return await r.json(); }catch(e){ console.error('鍔犺浇澶辫触: '+url, e); return null } }
 
 		function parseCatalogMarkdown(md){
 			const lines = (md || '').split(/\r?\n/);
@@ -225,15 +228,15 @@
 			const countEl = document.getElementById('article-count');
 			if(!listEl || !countEl) return;
 
-			countEl.textContent = `${items.length}篇`;
+			countEl.textContent = `${items.length}绡嘸;
 			if(!items.length){
-				listEl.innerHTML = '<li class="article-loading">暂无文章</li>';
+				listEl.innerHTML = '<li class="article-loading">鏆傛棤鏂囩珷</li>';
 				return;
 			}
 
 			listEl.innerHTML = items.map((item)=>{
 				const href = `article.html?file=${encodeURIComponent(item.path)}`;
-				const meta = [item.date, item.author].filter(Boolean).join(' · ');
+				const meta = [item.date, item.author].filter(Boolean).join(' 路 ');
 				const title = (item.title || '').replace(/"/g, '&quot;');
 				const summary = (item.summary || '').replace(/"/g, '&quot;');
 				return `<li><a href="${href}" title="${summary}"><span class="article-title">${title}</span><span class="article-meta">${meta}</span></a></li>`;
@@ -242,12 +245,12 @@
 
 		async function loadArticleCatalog(){
 			try{
-				const r = await fetch(CATALOG_PATH, { cache: 'no-store' });
+				const r = await fetch(CATALOG_PATH, { cache: 'force-cache' });
 				if(!r.ok) throw new Error(`HTTP ${r.status}`);
 				const text = await r.text();
 				renderArticleList(parseCatalogMarkdown(text));
 			}catch(e){
-				console.error('目录加载失败', e);
+				console.error('鐩綍鍔犺浇澶辫触', e);
 				renderArticleList([]);
 			}
 		}
@@ -262,7 +265,7 @@
 
 				if(tag === 'h1'){
 					const t = (el.textContent || '').trim();
-					if(t) blocks.push(`【${t}】`);
+					if(t) blocks.push(`銆?{t}銆慲);
 					continue;
 				}
 
@@ -296,7 +299,7 @@
 			}
 
 			const cleaned = blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
-			return `${cleaned}\n\n—— 汉语古音手册\n${entryUrl}`;
+			return `${cleaned}\n\n鈥斺€?姹夎鍙ら煶鎵嬪唽\n${entryUrl}`;
 		}
 
 		function updateButtons(){
@@ -319,22 +322,24 @@
 			currentChunk = n;
 			updateButtons();
 			const entries = document.getElementById('entries');
-			entries.innerHTML = '<div style="padding:20px;text-align:center;color:#999;">加载中...</div>';
-			loaded.delete(n);
+			entries.innerHTML = '<div style="padding:20px;text-align:center;color:#999;">鍔犺浇涓?..</div>';
 			await loadChunk(n);
 			window.scrollTo({top: 0, behavior: 'smooth'});
 		}
 
 		async function loadChunk(n){ 
-			if(loaded.has(n)) return; 
 			const url = CHUNK_URL(n);
-			console.log('开始加载', url);
+			let html = loaded.get(n) || '';
+			console.log('寮€濮嬪姞杞?, url);
 			try{ 
-				const r=await fetch(url); 
-				console.log('fetch 响应:', r.status, r.ok);
-				if(!r.ok) throw new Error('HTTP ' + r.status); 
-				const html = await r.text(); 
-				console.log('获取到 HTML，长度:', html.length);
+				if(!html){
+					const r=await fetch(url, { cache: 'force-cache' }); 
+					console.log('fetch 鍝嶅簲:', r.status, r.ok);
+					if(!r.ok) throw new Error('HTTP ' + r.status); 
+					html = await r.text(); 
+					loaded.set(n, html);
+				}
+				console.log('鑾峰彇鍒?HTML锛岄暱搴?', html.length);
 				const entries = document.getElementById('entries');
 				entries.innerHTML = '';
 				const wrapper = document.createElement('div'); 
@@ -343,14 +348,14 @@
 				
 				const headingsForChunk = indexData.headings.filter(h=>h.chunk===n).sort((a,b)=>a.index-b.index);
 				const h1s = wrapper.querySelectorAll('h1');
-				console.log('找到', h1s.length, '个 h1 标签，期望', headingsForChunk.length, '个');
+				console.log('鎵惧埌', h1s.length, '涓?h1 鏍囩锛屾湡鏈?, headingsForChunk.length, '涓?);
 				for(let i=0;i<h1s.length && i<headingsForChunk.length;i++){ 
 					try{ h1s[i].id = headingsForChunk[i].id; }catch(e){} 
 				}
 				
-				// 添加 show 类以使卡片可见，并为每个卡片添加复制按钮
+				// 娣诲姞 show 绫讳互浣垮崱鐗囧彲瑙侊紝骞朵负姣忎釜鍗＄墖娣诲姞澶嶅埗鎸夐挳
 				const cards = wrapper.querySelectorAll('.entry-card');
-				console.log('为', cards.length, '个卡片添加 show 类和复制按钮');
+				console.log('涓?, cards.length, '涓崱鐗囨坊鍔?show 绫诲拰澶嶅埗鎸夐挳');
 				const titleCount = new Map();
 				for(const card of cards){
 					const h1 = card.querySelector('h1');
@@ -361,10 +366,10 @@
 				}
 				const titleSeq = new Map();
 				for(let card of cards) {
-					// 只处理有 h1 标题的卡片，过滤掉孤立的字
+					// 鍙鐞嗘湁 h1 鏍囬鐨勫崱鐗囷紝杩囨护鎺夊绔嬬殑瀛?
 					const h1 = card.querySelector('h1');
 					if(!h1) {
-						// 没有 h1 的卡片是孤立字，直接移除
+						// 娌℃湁 h1 鐨勫崱鐗囨槸瀛ょ珛瀛楋紝鐩存帴绉婚櫎
 						card.remove();
 						continue;
 					}
@@ -373,12 +378,12 @@
 						if(!node || node.nodeType !== Node.TEXT_NODE) continue;
 						const raw = node.textContent || '';
 						const t = raw.trim();
-						if(t && t.length <= 3 && !/[，。！？；：,.!?;:\s]/u.test(t)){
+						if(t && t.length <= 3 && !/[锛屻€傦紒锛燂紱锛?.!?;:\s]/u.test(t)){
 							node.remove();
 						}
 					}
 
-					// 兼容后半分片里“<u>音标</u> + 中古音韵地位表”的写法，统一补成“上古音”表格框
+					// 鍏煎鍚庡崐鍒嗙墖閲屸€?u>闊虫爣</u> + 涓彜闊抽煹鍦颁綅琛ㄢ€濈殑鍐欐硶锛岀粺涓€琛ユ垚鈥滀笂鍙ら煶鈥濊〃鏍兼
 					const underlinedIPA = card.querySelectorAll('u');
 					for(const u of underlinedIPA){
 						if(!u || !u.parentElement || u.closest('table')) continue;
@@ -388,10 +393,10 @@
 						if(!next || next.tagName.toLowerCase() !== 'table') continue;
 						const cap = next.querySelector('caption');
 						const capText = (cap?.textContent || '').trim();
-						if(!capText.includes('中古')) continue;
+						if(!capText.includes('涓彜')) continue;
 
 						const soundTable = document.createElement('table');
-						soundTable.innerHTML = `<tr><th>上古音</th><td>${ipa}</td></tr>`;
+						soundTable.innerHTML = `<tr><th>涓婂彜闊?/th><td>${ipa}</td></tr>`;
 						u.insertAdjacentElement('beforebegin', soundTable);
 						u.remove();
 					}
@@ -406,7 +411,7 @@
 						titleSeq.set(key, idx);
 						const note = document.createElement('div');
 						note.className = 'polyphony-note';
-						note.textContent = `多音字 · 第 ${idx} 读音 / 共 ${total} 读音`;
+						note.textContent = `澶氶煶瀛?路 绗?${idx} 璇婚煶 / 鍏?${total} 璇婚煶`;
 						h1.insertAdjacentElement('afterend', note);
 					}
 
@@ -420,11 +425,11 @@
 						note.classList.add('entry-note');
 					}
 
-					// 添加复制按钮
+					// 娣诲姞澶嶅埗鎸夐挳
 					if(!card.querySelector('.copy-btn')) {
 						const copyBtn = document.createElement('button');
 						copyBtn.className = 'copy-btn';
-						copyBtn.textContent = '复制';
+						copyBtn.textContent = '澶嶅埗';
 						copyBtn.addEventListener('click', async (e) => {
 							e.stopPropagation();
 							const hid = card.querySelector('h1')?.id || '';
@@ -433,13 +438,13 @@
 							try{
 								await navigator.clipboard.writeText(cardText);
 								copyBtn.classList.add('copied');
-								copyBtn.textContent = '已复制';
+								copyBtn.textContent = '宸插鍒?;
 								setTimeout(() => {
 									copyBtn.classList.remove('copied');
-									copyBtn.textContent = '复制';
+									copyBtn.textContent = '澶嶅埗';
 								}, 2000);
 							}catch(err){
-								console.error('复制失败:', err);
+								console.error('澶嶅埗澶辫触:', err);
 							}
 						});
 						card.appendChild(copyBtn);
@@ -447,34 +452,33 @@
 				}
 				
 				entries.appendChild(wrapper);
-				loaded.set(n, html);
-				console.log('块', n, '加载完成');
+				console.log('鍧?, n, '鍔犺浇瀹屾垚');
 			}catch(e){ 
-				console.error('加载失败 chunk '+n, e);
+				console.error('鍔犺浇澶辫触 chunk '+n, e);
 				const entries = document.getElementById('entries');
-				entries.innerHTML = '<div style="padding:20px;color:#d32f2f;text-align:center;">加载失败: ' + e.message + '</div>';
+				entries.innerHTML = '<div style="padding:20px;color:#d32f2f;text-align:center;">鍔犺浇澶辫触: ' + e.message + '</div>';
 			}
 		}
 
 		document.addEventListener('DOMContentLoaded', async ()=>{
 			const entries = document.getElementById('entries');
 			if(!entries) {
-				console.error('未找到 #entries div');
+				console.error('鏈壘鍒?#entries div');
 				return;
 			}
 			
-			console.log('开始加载 INDEX_PATH:', INDEX_PATH);
+			console.log('寮€濮嬪姞杞?INDEX_PATH:', INDEX_PATH);
 			indexData = await fetchJSON(INDEX_PATH);
 			
 			if(!indexData){ 
-				console.error('索引文件加载失败');
-				entries.innerHTML = '❌ 无法加载索引文件'; 
+				console.error('绱㈠紩鏂囦欢鍔犺浇澶辫触');
+				entries.innerHTML = '鉂?鏃犳硶鍔犺浇绱㈠紩鏂囦欢'; 
 				return; 
 			}
 			
-			console.log('索引加载成功，总块数:', indexData.chunks);
+			console.log('绱㈠紩鍔犺浇鎴愬姛锛屾€诲潡鏁?', indexData.chunks);
 			
-			console.log('开始加载第一个块');
+			console.log('寮€濮嬪姞杞界涓€涓潡');
 			await goToChunk(0);
 
 			if(location.hash){ 
@@ -486,9 +490,9 @@
 			const input = document.getElementById('search-input'); 
 			const btn = document.getElementById('search-btn');
 			
-			// 获取所有繁体字集合（用于快速查找）
+			// 鑾峰彇鎵€鏈夌箒浣撳瓧闆嗗悎锛堢敤浜庡揩閫熸煡鎵撅級
 			const tradCharSet = new Set();
-			const charToHeading = new Map(); // 字 -> 标题对象
+			const charToHeading = new Map(); // 瀛?-> 鏍囬瀵硅薄
 			for(const h of indexData.headings){
 				const title = h.title;
 				if(title.length === 1) {
@@ -496,7 +500,7 @@
 					if(!charToHeading.has(title)) charToHeading.set(title, h);
 				}
 			}
-			console.log('索引中的繁体字数:', tradCharSet.size);
+			console.log('绱㈠紩涓殑绻佷綋瀛楁暟:', tradCharSet.size);
 			
 			function norm(s){ return (s||'').normalize('NFKC').trim(); }
 			
@@ -504,7 +508,7 @@
 				if(!q) return null;
 				const qNorm = norm(q);
 				
-				// 直接在索引中查找
+				// 鐩存帴鍦ㄧ储寮曚腑鏌ユ壘
 				for(const h of indexData.headings){ 
 					if(norm(h.title) === qNorm) {
 						return h;
@@ -523,21 +527,21 @@
 				let q = (input.value||'').trim(); 
 				if(!q) return;
 				
-				console.log('=== 搜索开始 ===');
-				console.log('输入:', q);
+				console.log('=== 鎼滅储寮€濮?===');
+				console.log('杈撳叆:', q);
 				
-				// 用户应该在左边面板转换后，在右边面板直接输入繁体字
+				// 鐢ㄦ埛搴旇鍦ㄥ乏杈归潰鏉胯浆鎹㈠悗锛屽湪鍙宠竟闈㈡澘鐩存帴杈撳叆绻佷綋瀛?
 				const h = findHeading(q);
 				
 				if(!h){ 
-					console.log('✗ 未找到匹配项');
+					console.log('鉁?鏈壘鍒板尮閰嶉」');
 					input.classList.add('no-result'); 
 					setTimeout(()=>input.classList.remove('no-result'),600); 
 					return; 
 				}
 				
-				console.log('✓ 找到:', h.title);
-				console.log('=== 搜索成功 ===');
+				console.log('鉁?鎵惧埌:', h.title);
+				console.log('=== 鎼滅储鎴愬姛 ===');
 				await goToChunk(h.chunk);
 				setTimeout(() => {
 					const el = document.getElementById(h.id); 
@@ -553,7 +557,7 @@
 			input.addEventListener('keydown', e=>{ if(e.key==='Enter') performSearch(); });
 			btn.addEventListener('click', performSearch);
 
-			// 右侧翻页按钮事件绑定
+			// 鍙充晶缈婚〉鎸夐挳浜嬩欢缁戝畾
 			const pagePrev = document.getElementById('page-prev');
 			const pageNext = document.getElementById('page-next');
 
@@ -568,7 +572,7 @@
 </head>
 <body>
 <script>
-// 在 DOM 加载前检测设备类型
+// 鍦?DOM 鍔犺浇鍓嶆娴嬭澶囩被鍨?
 (function() {
 	const isMobile = () => window.innerWidth <= 768;
 	const updateDeviceClass = () => {
@@ -610,9 +614,9 @@
 				<span id="article-count">加载中</span>
 			</div>
 			<ul id="article-list">
-				<li class="article-loading">正在加载目录...</li>
+				<li class="article-loading">姝ｅ湪鍔犺浇鐩綍...</li>
 			</ul>
-			<a class="article-more" href="articles.html">查看全部文章</a>
+			<a class="article-more" href="articles.html">鏌ョ湅鍏ㄩ儴鏂囩珷</a>
 		</div>
 	</div>
 </div>
@@ -625,7 +629,7 @@
 
 <footer class="site-footer">
 	<div class="footer-content">
-		<span class="footer-text">© 2026 Takion Kroslin</span>
+		<span class="footer-text">漏 2026 Takion Kroslin</span>
 		<span class="footer-sep">|</span>
 		<a href="https://github.com/TakionKroslin/dictionary" target="_blank" class="footer-link" title="GitHub" aria-label="GitHub">
 			<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -658,23 +662,23 @@
 </button>
 
 <script>
-// 分享按钮功能
+// 鍒嗕韩鎸夐挳鍔熻兘
 const shareBtn = document.getElementById('share-btn');
 if(shareBtn) {
 	shareBtn.addEventListener('click', () => {
 		const shareUrl = 'https://guyin.tahino.top/';
 		navigator.clipboard.writeText(shareUrl).then(() => {
 			shareBtn.classList.add('copied');
-			shareBtn.textContent = '🔗 链接已复制';
+			shareBtn.textContent = '馃敆 閾炬帴宸插鍒?;
 			setTimeout(() => {
 				shareBtn.classList.remove('copied');
-				shareBtn.textContent = '分享当前页';
+				shareBtn.textContent = '鍒嗕韩褰撳墠椤?;
 			}, 3000);
-		}).catch(err => console.error('复制失败:', err));
+		}).catch(err => console.error('澶嶅埗澶辫触:', err));
 	});
 }
 
-// 回到顶部/底部按钮功能
+// 鍥炲埌椤堕儴/搴曢儴鎸夐挳鍔熻兘
 const scrollBtn = document.getElementById('scroll-to-top');
 const scrollBottomBtn = document.getElementById('scroll-to-bottom');
 const sidebarToggleBtn = document.getElementById('sidebar-mobile-toggle');
@@ -716,3 +720,4 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
+
