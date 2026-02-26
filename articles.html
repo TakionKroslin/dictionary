@@ -32,11 +32,14 @@
     .time-item{display:block;padding:9px 10px;border-radius:10px;border:var(--glass-border);background:rgba(255,255,255,.52);text-decoration:none;color:inherit;transition:transform .2s, background .2s}
     .time-item:hover{transform:translateY(-1px);background:rgba(255,255,255,.74)}
     .time-item-title{text-decoration:none;color:#2b6cb0;font-size:14px}
-    footer.site-footer{position:fixed;inset:auto 0 0 0;width:100vw;max-width:100vw;z-index:1000;margin:0;border-radius:0;background:var(--glass-bg);-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);padding:8px 18px;height:var(--footer-height);box-sizing:border-box;border-top:1px solid rgba(230,233,239,.6);box-shadow:0 -2px 12px rgba(11,59,102,.08);display:flex;align-items:center;justify-content:center;text-align:center;color:#666;font-size:13px}
+    footer.site-footer{position:fixed;inset:auto 12px 10px 12px;width:auto;max-width:none;z-index:1000;margin:0;border-radius:14px;background:var(--glass-bg);-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);padding:10px 12px;height:var(--footer-height);box-sizing:border-box;border:1px solid rgba(230,233,239,.6);box-shadow:0 -2px 10px rgba(11,59,102,.06);display:flex;align-items:center;justify-content:center;text-align:center;color:#666;font-size:13px}
     .footer-content{display:flex;align-items:center;gap:8px;white-space:nowrap}
     .footer-link{display:inline-flex;align-items:center;gap:4px;color:#2b6cb0;text-decoration:none;opacity:.85;transition:opacity .2s,transform .2s}
     .footer-link:hover{opacity:1;transform:translateY(-1px)}
     .footer-link svg{width:12px;height:12px;display:block}
+    .article-search-pop{position:fixed;top:66px;right:12px;z-index:1250;display:none;width:min(78vw,280px);padding:8px;border-radius:12px;border:var(--glass-border);background:var(--glass-bg);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 4px 12px rgba(11,59,102,.12)}
+    .article-search-pop.show{display:block}
+    .article-search-input{width:100%;height:40px;box-sizing:border-box;padding:0 12px;border-radius:10px;border:var(--glass-border);background:rgba(255,255,255,.5);color:#1f3349;font-size:14px}
     @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
       .topbar,.btn,.mobile-corner-btn,.panel,footer.site-footer{background:rgba(255,255,255,0.78) !important}
     }
@@ -47,6 +50,7 @@
       .brand,.btn{display:none}
       .topbar{background:transparent;backdrop-filter:none;border:0;box-shadow:none;height:0;padding:0}
       .mobile-corner-btn{display:inline-flex}
+      .article-search-pop{top:66px;right:12px}
       footer.site-footer{inset:auto 12px 10px 12px;width:auto;max-width:none;border-radius:14px;height:64px;padding:10px 12px;border:1px solid rgba(230,233,239,.6);box-shadow:0 -2px 10px rgba(11,59,102,.06)}
     }
   </style>
@@ -62,14 +66,14 @@
   <button id="mobile-article-search-btn" class="mobile-corner-btn right" type="button" aria-label="搜索站内文章" title="搜索站内文章">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
   </button>
+  <div id="article-search-pop" class="article-search-pop">
+    <input id="article-search-pop-input" class="article-search-input" type="search" placeholder="搜索站内文章..." aria-label="搜索站内文章" />
+  </div>
 
   <main class="wrap">
     <section class="panel">
       <h1>全部文章</h1>
       <div class="muted">按发布时间倒序，支持后续扩展到更多栏目。</div>
-      <div class="article-search-wrap">
-        <input id="article-search" class="article-search" type="search" placeholder="搜索站内文章..." aria-label="搜索站内文章" />
-      </div>
       <div id="all-list" class="list"><div class="item">加载中...</div></div>
     </section>
     <aside class="panel">
@@ -98,15 +102,24 @@
   <script>
     (function(){
       const CATALOG_PATH = 'articles/catalog.md';
-      const searchInput = document.getElementById('article-search');
       const mobileSearchBtn = document.getElementById('mobile-article-search-btn');
+      const searchPop = document.getElementById('article-search-pop');
+      const searchInput = document.getElementById('article-search-pop-input');
       function parseCatalog(md){
         const out=[];
         for(const raw of (md||'').split(/\r?\n/)){
           const line=raw.trim();
-          const m=line.match(/^- \[(.+?)\]\((.+?)\)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)(?:\s*\|\s*(.+))?$/);
+          const m=line.match(/^- \[(.+?)\]\((.+?)\)\s*\|\s*(.+)$/);
           if(!m) continue;
-          out.push({title:m[1].trim(),path:m[2].trim(),date:m[3].trim(),author:m[4].trim(),summary:(m[5]||'').trim(),category:'未分类'});
+          const parts = (m[3] || '').split('|').map((x)=>x.trim());
+          out.push({
+            title:m[1].trim(),
+            path:m[2].trim(),
+            date:parts[0] || '',
+            author:parts[1] || '',
+            summary:parts[2] || '',
+            category:parts[3] || '未分类'
+          });
         }
         return out;
       }
@@ -159,6 +172,14 @@
           }).join('');
 
           timeline.innerHTML = items.map((it)=>`<a class="time-item" href="article.html?file=${encodeURIComponent(it.path)}"><div style="font-size:12px;color:#5f7a97;">${esc(it.date)}</div><span class="time-item-title">${esc(it.title)}</span></a>`).join('');
+          const applyFilter = ()=>{
+            if(!searchInput) return;
+            const q = searchInput.value.trim().toLowerCase();
+            all.querySelectorAll('.item').forEach((el)=>{
+              const txt = (el.textContent || '').toLowerCase();
+              el.style.display = !q || txt.includes(q) ? '' : 'none';
+            });
+          };
           if(searchInput){
             searchInput.addEventListener('input', ()=>{
               const q = searchInput.value.trim().toLowerCase();
@@ -175,9 +196,16 @@
         }
       }
       mobileSearchBtn?.addEventListener('click', ()=>{
-        if(!searchInput) return;
-        searchInput.focus();
-        searchInput.scrollIntoView({ behavior:'smooth', block:'center' });
+        if(!searchPop || !searchInput) return;
+        const show = !searchPop.classList.contains('show');
+        searchPop.classList.toggle('show', show);
+        if(show) searchInput.focus();
+      });
+      document.addEventListener('click', (e)=>{
+        if(!searchPop || !mobileSearchBtn) return;
+        const t = e.target;
+        if(searchPop.contains(t) || mobileSearchBtn.contains(t)) return;
+        searchPop.classList.remove('show');
       });
       load();
     })();
