@@ -13,6 +13,7 @@
     .brand{font-weight:700;color:#2b6cb0;text-decoration:none}
     .btn{margin-left:auto;padding:8px 12px;border-radius:var(--btn-radius);text-decoration:none;color:#2b6cb0;background:var(--glass-bg);border:var(--glass-border);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%)}
     .mobile-corner-btn{display:none;position:fixed;top:10px;z-index:1200;width:48px;height:48px;align-items:center;justify-content:center;border-radius:12px;text-decoration:none;color:#2b6cb0;background:var(--glass-bg);border:var(--glass-border);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 2px 8px rgba(43,108,176,.2);font-size:14px;font-weight:600;line-height:1}
+    .mobile-corner-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
     .mobile-corner-btn.left{left:10px}
     .mobile-corner-btn.right{right:10px}
     .wrap{max-width:1180px;margin:24px auto;padding:0 14px;display:grid;grid-template-columns:1fr 320px;gap:18px}
@@ -46,7 +47,7 @@
       .brand,.btn{display:none}
       .topbar{background:transparent;backdrop-filter:none;border:0;box-shadow:none;height:0;padding:0}
       .mobile-corner-btn{display:inline-flex}
-      footer.site-footer{inset:auto 10px 10px 10px;width:auto;max-width:none;border-radius:14px;height:64px;padding:10px 12px;border:1px solid rgba(230,233,239,.6);box-shadow:0 -2px 10px rgba(11,59,102,.06)}
+      footer.site-footer{inset:auto 12px 10px 12px;width:auto;max-width:none;border-radius:14px;height:64px;padding:10px 12px;border:1px solid rgba(230,233,239,.6);box-shadow:0 -2px 10px rgba(11,59,102,.06)}
     }
   </style>
 </head>
@@ -55,13 +56,20 @@
     <a class="brand" href="index.html">汉语古音手册 · 文章总览</a>
     <a class="btn" href="index.html">返回词典</a>
   </header>
-  <a class="mobile-corner-btn left" href="index.html" aria-label="返回">返</a>
-  <a class="mobile-corner-btn right" href="index.html" aria-label="搜索">搜</a>
+  <a class="mobile-corner-btn left" href="index.html" aria-label="主页" title="主页">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5"></path><path d="M6.5 10.5V20h11v-9.5"></path></svg>
+  </a>
+  <button id="mobile-article-search-btn" class="mobile-corner-btn right" type="button" aria-label="搜索站内文章" title="搜索站内文章">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+  </button>
 
   <main class="wrap">
     <section class="panel">
       <h1>全部文章</h1>
       <div class="muted">按发布时间倒序，支持后续扩展到更多栏目。</div>
+      <div class="article-search-wrap">
+        <input id="article-search" class="article-search" type="search" placeholder="搜索站内文章..." aria-label="搜索站内文章" />
+      </div>
       <div id="all-list" class="list"><div class="item">加载中...</div></div>
     </section>
     <aside class="panel">
@@ -90,6 +98,8 @@
   <script>
     (function(){
       const CATALOG_PATH = 'articles/catalog.md';
+      const searchInput = document.getElementById('article-search');
+      const mobileSearchBtn = document.getElementById('mobile-article-search-btn');
       function parseCatalog(md){
         const out=[];
         for(const raw of (md||'').split(/\r?\n/)){
@@ -149,14 +159,30 @@
           }).join('');
 
           timeline.innerHTML = items.map((it)=>`<a class="time-item" href="article.html?file=${encodeURIComponent(it.path)}"><div style="font-size:12px;color:#5f7a97;">${esc(it.date)}</div><span class="time-item-title">${esc(it.title)}</span></a>`).join('');
+          if(searchInput){
+            searchInput.addEventListener('input', ()=>{
+              const q = searchInput.value.trim().toLowerCase();
+              all.querySelectorAll('.item').forEach((el)=>{
+                const txt = (el.textContent || '').toLowerCase();
+                el.style.display = !q || txt.includes(q) ? '' : 'none';
+              });
+            });
+          }
         }catch(err){
           all.innerHTML = `<div class="item">加载失败：${esc(String(err.message||err))}</div>`;
           cat.innerHTML = '<div class="time-item">-</div>';
           timeline.innerHTML = '<div class="time-item">-</div>';
         }
       }
+      mobileSearchBtn?.addEventListener('click', ()=>{
+        if(!searchInput) return;
+        searchInput.focus();
+        searchInput.scrollIntoView({ behavior:'smooth', block:'center' });
+      });
       load();
     })();
   </script>
 </body>
 </html>
+    .article-search-wrap{margin-top:10px}
+    .article-search{width:100%;height:40px;box-sizing:border-box;padding:0 12px;border-radius:10px;border:var(--glass-border);background:var(--glass-bg);color:#1f3349;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);font-size:14px}
