@@ -445,14 +445,14 @@
         let catalog = [];
         let catalogMeta = null;
         try{
-          const ctext = await fetch(CATALOG_PATH,{cache:'force-cache'}).then((r)=>r.text());
+          const ctext = await fetch(CATALOG_PATH,{cache:'no-cache'}).then((r)=>r.text());
           catalog = parseCatalog(ctext);
           catalogMeta = catalog.find((it)=>it.path === safe) || null;
           setupPrevNext(catalog, safe);
         }catch(_){ prevBtn.disabled = true; nextBtn.disabled = true; }
 
         try{
-          const mdRaw = await fetch(safe,{cache:'force-cache'}).then((r)=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); });
+          const mdRaw = await fetch(safe,{cache:'no-cache'}).then((r)=>{ if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); });
           const fallback = { ...DEFAULT_META, ...(catalogMeta || {}) };
           const { meta, markdown } = extractArticleMeta(mdRaw, fallback);
           titleEl.textContent = meta.title || DEFAULT_META.title;

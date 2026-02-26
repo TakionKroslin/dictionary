@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>汉语古音手册 — 词典</title>
 	<link rel="icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png" type="image/png">
-	<link rel="prefetch" href="/assets/articles-8TKf3Hn8.html" as="document">
-	<link rel="prefetch" href="/assets/article--JhS6rKv.html" as="document">
+	<link rel="prefetch" href="/assets/articles-BUzabOXH.html" as="document">
+	<link rel="prefetch" href="/assets/article-CYiPdxHB.html" as="document">
 	<link rel="prefetch" href="data:text/markdown;base64,77u/IyDnq5nlhoXmlofnq6Dnm67lvZUNCg0KLSBb5bu656uZ6K+05piO77ya5LuO5LiA5Lu96LaF5aSnVFhU5Yiw5Y+v5qOA57Si55qE5Y+k6Z+z6K+N5YW4572R56uZXShhcnRpY2xlcy9vdmVydmlldy5tZCkgfCAyMDI2LTAyLTI0IHwgVGFraW9uIEtyb3NsaW4gfCDorrLov7Dlu7rnq5nliqjmnLrjgIHliIbniYfmlrnmoYjjgIHmo4DntKLkuI7kuqTkupLorr7orqHvvIzku6Xlj4rlpoLkvZXorqnlj6Tpn7PotYTmlpnmm7TmmJPorr/pl67jgIINCi0gW+acgOaWsOeJiOacrOWKn+iDveWFqOino++8mue7n+S4gFVJ44CB56e75Yqo56uv5L6n5qCP44CB5LiK5LiL56+H44CB5LqM57u056CB5YiG5Lqr5LiOTWFya2Rvd27lhYPkv6Hmga9dKGFydGljbGVzL3BvbHlwaG9ueS5tZCkgfCAyMDI2LTAyLTI0IHwgVGFraW9uIEtyb3NsaW4gfCDlrozmlbTor7TmmI7mnKzova7mm7TmlrDlubbnu5nlh7rku6PnoIHpq5jkuq7jgIFMYVRlWOOAgUhUTUzltYzlhaXnrYnlsZXnpLrnpLrkvovjgIINCg==" as="fetch" crossorigin>
 	<link rel="shortcut icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
 	<link rel="apple-touch-icon" href="https://pic1.imgdb.cn/item/698dc2031d67521e9b492114.png">
@@ -107,11 +107,12 @@
 			body{padding-top:88px !important;padding-bottom:300px !important}
 			
 			/* 顶部栏两行布局 */
-			.topbar{height:72px;padding:10px 12px;background:rgba(255,255,255,0.44);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);border-bottom:1px solid rgba(230,233,239,0.72);box-shadow:0 2px 10px rgba(11,59,102,0.08)}
+			.topbar{position:fixed !important;top:0 !important;left:0 !important;right:0 !important;height:72px !important;padding:10px 12px !important;background:rgba(255,255,255,0.44) !important;-webkit-backdrop-filter:blur(12px) saturate(125%) !important;backdrop-filter:blur(12px) saturate(125%) !important;border-bottom:1px solid rgba(230,233,239,0.72) !important;box-shadow:0 2px 10px rgba(11,59,102,0.08) !important;overflow:visible !important}
+			.topbar::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.68);border-bottom:1px solid rgba(230,233,239,0.72);z-index:-1;pointer-events:none}
 			.brand,.topbar-warning{display:none}
-			.search-wrap{width:100%;margin:0;gap:8px;padding:6px;border-radius:12px;background:rgba(255,255,255,0.52);border:1px solid rgba(208,215,230,0.78);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 4px 14px rgba(11,59,102,0.08);isolation:isolate}
-			#search-input{height:40px;padding:0 12px;font-size:14px;line-height:40px;box-sizing:border-box;flex:1;background-color:rgba(255,255,255,0.88);border:1px solid rgba(208,215,230,0.86);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:none}
-			#search-btn{height:40px;padding:0 14px;font-size:14px;min-width:60px;box-sizing:border-box;background-color:rgba(255,255,255,0.88);border:1px solid rgba(208,215,230,0.86);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%)}
+			.search-wrap{width:100% !important;margin:0 !important;gap:8px !important;padding:6px !important;border-radius:12px !important;background:rgba(255,255,255,0.62) !important;border:1px solid rgba(208,215,230,0.78) !important;-webkit-backdrop-filter:blur(12px) saturate(125%) !important;backdrop-filter:blur(12px) saturate(125%) !important;box-shadow:0 4px 14px rgba(11,59,102,0.08) !important;isolation:isolate}
+			#search-input{height:40px !important;padding:0 12px !important;font-size:14px !important;line-height:40px !important;box-sizing:border-box !important;flex:1 !important;background-color:rgba(255,255,255,0.92) !important;border:1px solid rgba(208,215,230,0.86) !important;-webkit-backdrop-filter:blur(12px) saturate(125%) !important;backdrop-filter:blur(12px) saturate(125%) !important;box-shadow:none !important}
+			#search-btn{height:40px !important;padding:0 14px !important;font-size:14px !important;min-width:60px !important;box-sizing:border-box !important;background-color:rgba(255,255,255,0.92) !important;border:1px solid rgba(208,215,230,0.86) !important;-webkit-backdrop-filter:blur(12px) saturate(125%) !important;backdrop-filter:blur(12px) saturate(125%) !important}
 			
 			/* 侧边栏隐藏 */
 			#sidebar-mobile-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;opacity:1 !important;pointer-events:auto !important;transform:none !important}
@@ -156,8 +157,9 @@
 		}
 		@supports (-webkit-touch-callout: none){
 			@media (max-width:768px){
-				.topbar{background-color:rgba(255,255,255,0.64)}
-				.search-wrap,#search-input,#search-btn{background-color:rgba(255,255,255,0.86)}
+				.topbar{background-color:rgba(255,255,255,0.74) !important}
+				.topbar::before{background:rgba(255,255,255,0.82) !important}
+				.search-wrap,#search-input,#search-btn{background-color:rgba(255,255,255,0.92) !important}
 			}
 		}
 	</style>
