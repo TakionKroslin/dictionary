@@ -2,7 +2,7 @@
 
 ## 一、UI统一：按钮全部改为圆角矩形（可视化实景）
 
-这部分先给你直接看结果，下面这个展示块使用的是主站同参数：
+下面这个展示块使用的是主站同参数：
 
 - 背景：`rgba(255,255,255,0.3)`
 - 边框：`1px solid rgba(208,215,230,0.72)`
@@ -46,7 +46,7 @@
 
 ## 四、目录高亮联动：点击、滚动、hash 三路同步
 
-你关心的“光标有没有跟着动”，在视觉上就是目录 active 项是否及时变化。下面示例按当前真实样式参数渲染：
+目录 active 项现在可以及时变化，下面示例按当前真实样式参数渲染：
 
 <div style="max-width:320px;padding:14px;border-radius:16px;background:rgba(255,255,255,0.3);border:1px solid rgba(208,215,230,0.72);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 14px 36px rgba(14,27,46,.08);">
   <div style="margin:0 0 10px;font-size:13px;letter-spacing:.08em;color:#2b6cb0;font-weight:700;">CATALOG</div>
@@ -55,17 +55,21 @@
   <a href="#" style="display:block;padding:6px 8px 6px 16px;margin:2px 0;border-radius:8px;text-decoration:none;color:#546c85;font-size:12px;opacity:.62;transform:scale(.94);">点击 / 滚动 / hash 同步</a>
 </div>
 
-## 五、文章页底部工具条：二维码 + 分享 + 编辑人
+## 五、文章页底部工具条：按钮与文字对齐修正
 
-这块是文章页末端最实用的功能组合，下面同样是可见示例：
+这块现在按源码统一了按钮高度、行高和文字字号，避免“按钮看起来比文字浮”：
+
+- 操作按钮：`height:36px; font-size:13px; line-height:1; padding:0 12px`
+- 编辑信息：`font-size:13px; line-height:1.4`
+- 按钮组合：`display:flex; align-items:center; gap:8px`
 
 <div style="margin-top:6px;padding:16px;border-radius:14px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.52);display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;max-width:760px;">
   <div style="width:110px;height:110px;border-radius:10px;border:1px solid rgba(208,215,230,.72);background:#fff;display:flex;align-items:center;justify-content:center;color:#5f7a97;font-size:12px;">二维码</div>
   <div style="display:flex;flex-direction:column;gap:10px;">
     <div style="font-size:14px;color:#2b6cb0;font-weight:600;">移动端阅读与分享</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <button style="padding:8px 12px;background:rgba(255,255,255,0.3);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;backdrop-filter:blur(12px) saturate(125%);">复制文章链接</button>
-      <button style="padding:8px 12px;background:rgba(255,255,255,0.3);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;backdrop-filter:blur(12px) saturate(125%);">分享给好友</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <a href="#" style="display:inline-flex;align-items:center;justify-content:center;height:36px;line-height:1;padding:0 12px;background:rgba(255,255,255,0.35);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;text-decoration:none;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">文章总览</a>
+      <button style="display:inline-flex;align-items:center;justify-content:center;height:36px;line-height:1;padding:0 12px;background:rgba(255,255,255,0.35);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">分享给好友</button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;color:#4f6882;font-size:13px;">
       <img src="https://pic1.imgdb.cn/item/69328494d1e741a32bf1ba21.jpg" alt="Takion Kroslin" style="width:32px;height:32px;border-radius:999px;border:1px solid rgba(208,215,230,.8);" />
@@ -89,7 +93,7 @@
   </div>
 </div>
 
-## 七、真实逻辑片段（保留必要代码说明）
+## 七、保留必要代码说明
 
 上面都可视化了，这里保留一块“可直接显示”的逻辑说明面板，避免再出现无法显示的代码块。
 
@@ -102,7 +106,7 @@ bindTocInteractions()
   -> history.replaceState(..., '#'+encodeURIComponent(id))
 </div>
 
-## 八、公式与高亮示例（保留阅读功能验证）
+## 八、公式与高亮示例
 
 行内公式：$\Delta = b^2 - 4ac$。  
 块级公式：
@@ -115,20 +119,7 @@ $$
 分类归一规则示意：输入为空时回退到 <code>未分类</code>，有值则保留原分类。
 </div>
 
-## 九、版本结论
-
-本次终版重点已经全部对齐：
-
-1. 按钮统一为圆角矩形。
-2. 移动端文章入口在右侧按钮区，不占搜索栏。
-3. 可点击卡片改为整卡响应。
-4. 目录高亮做到点击、滚动、hash 同步。
-5. 文章加载增加降级渲染，稳定性提升。
-6. 新增文章总览页，支持时间线和分类管理。
-
-从“可用”到“一致”和“可持续维护”，这一版已经把系统打通。后续新增内容只需遵守 `catalog.md + article-meta` 规范即可扩展。
-
-## 十、移动端 Header：角落按钮优先
+## 九、移动端 Header：角落按钮优先
 
 这一轮采用的是“角落按钮优先”布局，参数直接来自当前代码：
 
@@ -143,22 +134,7 @@ $$
   <button style="position:absolute;top:10px;right:10px;width:48px;height:48px;border-radius:12px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);color:#2b6cb0;font-size:14px;font-weight:600;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">搜索</button>
 </div>
 
-## 十一、Article 底部工具区去重
-
-这里按源码做了去重：把重复动作移除，只保留“文章总览 + 系统分享”。
-
-<div style="margin-top:6px;padding:16px;border-radius:14px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.52);display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;max-width:760px;">
-  <div style="width:110px;height:110px;border-radius:10px;border:1px solid rgba(208,215,230,.72);background:#fff;display:flex;align-items:center;justify-content:center;color:#5f7a97;font-size:12px;">二维码</div>
-  <div style="display:flex;flex-direction:column;gap:10px;">
-    <div style="font-size:14px;color:#2b6cb0;font-weight:600;">移动端阅读与分享</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <a href="#" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;background:rgba(255,255,255,0.35);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;text-decoration:none;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">文章总览</a>
-      <button style="min-height:44px;padding:8px 12px;background:rgba(255,255,255,0.35);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">分享给好友</button>
-    </div>
-  </div>
-</div>
-
-## 十二、Footer 分端策略：桌面贴边，移动悬浮
+## 十、Footer 分端策略：桌面贴边，移动悬浮
 
 当前源码已经分端处理，不再混用一种 footer 形态：
 
@@ -179,7 +155,7 @@ $$
   </div>
 </div>
 
-## 十三、文章总览搜索交互：弹出层与焦点样式统一
+## 十一、文章总览搜索交互：弹出层与焦点样式统一
 
 站内文章搜索入口在桌面和移动共用一套弹出层，最新代码把输入框和按钮焦点黑框统一去掉，保持与玻璃 UI 一致：
 
@@ -196,3 +172,16 @@ $$
     <input type="search" value="polyphony" style="width:100%;height:40px;padding:0 12px;border-radius:10px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.5);color:#1f3349;font-size:14px;outline:none;-webkit-appearance:none;appearance:none;box-sizing:border-box;" />
   </div>
 </div>
+
+## 十二、版本结论
+
+本次终版重点已经全部对齐：
+
+1. 按钮统一为圆角矩形。
+2. 移动端文章入口在右侧按钮区，不占搜索栏。
+3. 可点击卡片改为整卡响应。
+4. 目录高亮做到点击、滚动、hash 同步。
+5. 文章加载增加降级渲染，稳定性提升。
+6. 新增文章总览页，支持时间线和分类管理。
+
+从“可用”到“一致”和“可持续维护”，这一版已经把系统打通。后续新增内容只需遵守 `catalog.md + article-meta` 规范即可扩展。
