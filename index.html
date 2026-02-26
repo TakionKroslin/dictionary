@@ -109,9 +109,9 @@
 			/* 顶部栏两行布局 */
 			.topbar{padding:0;background:transparent;backdrop-filter:none;border:0;box-shadow:none;height:0}
 			.brand,.topbar-warning{display:none}
-			.search-wrap{width:calc(100% - 24px);margin:0 auto;gap:8px;padding:6px 0 0}
-			#search-input{height:40px;padding:0 12px;font-size:14px;line-height:40px;box-sizing:border-box;flex:1;background:rgba(255,255,255,0.52);border:1px solid rgba(208,215,230,0.82);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 4px 14px rgba(11,59,102,0.08)}
-			#search-btn{height:40px;padding:0 14px;font-size:14px;min-width:60px;box-sizing:border-box}
+			.search-wrap{width:calc(100% - 24px);margin:0 auto;gap:8px;padding:6px;border-radius:12px;background:rgba(255,255,255,0.36);border:1px solid rgba(208,215,230,0.72);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:0 4px 14px rgba(11,59,102,0.08);isolation:isolate}
+			#search-input{height:40px;padding:0 12px;font-size:14px;line-height:40px;box-sizing:border-box;flex:1;background:rgba(255,255,255,0.72);border:1px solid rgba(208,215,230,0.82);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);box-shadow:none}
+			#search-btn{height:40px;padding:0 14px;font-size:14px;min-width:60px;box-sizing:border-box;background:rgba(255,255,255,0.72);border:1px solid rgba(208,215,230,0.82);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%)}
 			
 			/* 侧边栏隐藏 */
 			#sidebar-mobile-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;opacity:1 !important;pointer-events:auto !important;transform:none !important}
@@ -153,6 +153,11 @@
 			.footer-text{font-size:12px}
 			.footer-btn{width:20px;height:20px}
 			.footer-btn svg{width:18px;height:18px}
+		}
+		@supports (-webkit-touch-callout: none){
+			@media (max-width:768px){
+				.search-wrap,#search-input,#search-btn{background-color:rgba(255,255,255,0.74)}
+			}
 		}
 	</style>
 		<script>
