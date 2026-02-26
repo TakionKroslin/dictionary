@@ -1,4 +1,4 @@
-﻿<article-meta title="最新版本功能全解：统一UI、移动端入口、整卡点击、目录联动与文章系统终版" date="2026-02-25" author="Takion Kroslin" category="版本更新" cover="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80"></article-meta>
+﻿<article-meta title="最新版本功能全解：统一UI、移动端入口、整卡点击、目录联动与文章系统终版" date="2026-02-26" author="Takion Kroslin" category="版本更新" cover="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80"></article-meta>
 
 ## 一、UI统一：按钮全部改为圆角矩形（可视化实景）
 
@@ -12,7 +12,7 @@
 <div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px;border-radius:14px;background:rgba(255,255,255,0.3);border:1px solid rgba(208,215,230,0.72);backdrop-filter:blur(12px) saturate(125%);">
   <button style="padding:10px 16px;background:rgba(255,255,255,0.3);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;backdrop-filter:blur(12px) saturate(125%);cursor:pointer;">查找</button>
   <button style="padding:9px 12px;background:rgba(43,108,176,0.16);color:#1f4f86;border:1px solid rgba(43,108,176,0.26);border-radius:10px;backdrop-filter:blur(8px) saturate(120%);cursor:pointer;">分享当前页</button>
-  <button style="padding:8px 12px;background:rgba(255,255,255,0.3);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;backdrop-filter:blur(12px) saturate(125%);cursor:pointer;">复制文章链接</button>
+  <button style="padding:8px 12px;background:rgba(255,255,255,0.3);color:#2b6cb0;border:1px solid rgba(208,215,230,0.72);border-radius:10px;backdrop-filter:blur(12px) saturate(125%);cursor:pointer;">文章总览</button>
 </div>
 
 ## 二、移动端入口优化：文章按钮从搜索区迁到右侧悬浮区
@@ -185,3 +185,4 @@ $$
 6. 新增文章总览页，支持时间线和分类管理。
 
 从“可用”到“一致”和“可持续维护”，这一版已经把系统打通。后续新增内容只需遵守 `catalog.md + article-meta` 规范即可扩展。
+
