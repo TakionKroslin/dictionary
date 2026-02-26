@@ -128,7 +128,7 @@ $$
 
 从“可用”到“一致”和“可持续维护”，这一版已经把系统打通。后续新增内容只需遵守 `catalog.md + article-meta` 规范即可扩展。
 
-## 十、续写：移动端 Header 简化为“角落按钮优先”
+## 十、移动端 Header：角落按钮优先
 
 这一轮采用的是“角落按钮优先”布局，参数直接来自当前代码：
 
@@ -143,7 +143,7 @@ $$
   <button style="position:absolute;top:10px;right:10px;width:48px;height:48px;border-radius:12px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);color:#2b6cb0;font-size:14px;font-weight:600;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">搜索</button>
 </div>
 
-## 十一、续写：Article 底部工具区去重
+## 十一、Article 底部工具区去重
 
 这里按源码做了去重：把重复动作移除，只保留“文章总览 + 系统分享”。
 
@@ -158,18 +158,41 @@ $$
   </div>
 </div>
 
-## 十二、当前版本定位
+## 十二、Footer 分端策略：桌面贴边，移动悬浮
 
-这一版的移动端 footer 统一为“全局悬浮 + 圆角矩形”，不是胶囊圆边：
+当前源码已经分端处理，不再混用一种 footer 形态：
 
-- 高度：`64px`
-- 位置：`inset: auto 10px 10px 10px`
-- 圆角：`14px`
-- 玻璃：`blur(18px) saturate(145%)`
-- iPhone 兼容：补齐 `-webkit-backdrop-filter`，并提供无 blur 的背景 fallback
+- 桌面端：贴边窄条，`left:0; right:0; bottom:0; border-radius:0;`
+- 移动端：悬浮圆角矩形，`inset:auto 12px 10px 12px; border-radius:14px; height:64px;`
+- 两端都保留同一套玻璃变量：`rgba(255,255,255,.35)` + `blur(18px) saturate(145%)`
 
-<div style="position:relative;height:98px;max-width:560px;border-radius:12px;border:1px dashed rgba(208,215,230,.72);background:rgba(236,242,249,.8);">
-  <div style="position:absolute;left:10px;right:10px;bottom:10px;height:64px;border-radius:14px;border:1px solid rgba(230,233,239,.6);background:rgba(255,255,255,.35);box-shadow:0 -2px 10px rgba(11,59,102,.06);display:flex;align-items:center;justify-content:center;color:#666;font-size:13px;-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);">
-    © 2026 Takion Kroslin | GitHub
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:760px;">
+  <div style="position:relative;height:98px;border-radius:12px;border:1px dashed rgba(208,215,230,.72);background:rgba(236,242,249,.8);">
+    <div style="position:absolute;left:0;right:0;bottom:0;height:50px;border-top:1px solid rgba(230,233,239,.6);background:rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;color:#666;font-size:13px;-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);">
+      桌面端贴边 footer
+    </div>
+  </div>
+  <div style="position:relative;height:98px;border-radius:12px;border:1px dashed rgba(208,215,230,.72);background:rgba(236,242,249,.8);">
+    <div style="position:absolute;left:12px;right:12px;bottom:10px;height:64px;border-radius:14px;border:1px solid rgba(230,233,239,.6);background:rgba(255,255,255,.35);box-shadow:0 -2px 10px rgba(11,59,102,.06);display:flex;align-items:center;justify-content:center;color:#666;font-size:13px;-webkit-backdrop-filter:blur(18px) saturate(145%);backdrop-filter:blur(18px) saturate(145%);">
+      移动端悬浮 footer
+    </div>
+  </div>
+</div>
+
+## 十三、文章总览搜索交互：弹出层与焦点样式统一
+
+站内文章搜索入口在桌面和移动共用一套弹出层，最新代码把输入框和按钮焦点黑框统一去掉，保持与玻璃 UI 一致：
+
+- 弹层：`opacity + transform` 过渡（打开/收回都有动画）
+- 搜索框：`appearance:none; outline:none;`
+- 入口按钮：`.btn` 和 `.mobile-corner-btn` 都移除默认黑色焦点框
+
+<div style="max-width:560px;padding:12px;border-radius:14px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.42);">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <button style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 12px;border-radius:10px;font-size:13px;line-height:1;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);color:#2b6cb0;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">搜索文章</button>
+    <button style="width:48px;height:48px;border-radius:12px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);color:#2b6cb0;-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">🔍</button>
+  </div>
+  <div style="padding:8px;border-radius:12px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.35);-webkit-backdrop-filter:blur(12px) saturate(125%);backdrop-filter:blur(12px) saturate(125%);">
+    <input type="search" value="polyphony" style="width:100%;height:40px;padding:0 12px;border-radius:10px;border:1px solid rgba(208,215,230,.72);background:rgba(255,255,255,.5);color:#1f3349;font-size:14px;outline:none;-webkit-appearance:none;appearance:none;box-sizing:border-box;" />
   </div>
 </div>
